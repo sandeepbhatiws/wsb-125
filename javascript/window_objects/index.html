@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>Window Object Methods</title>
+   </head>
+           
+   <body>
+           <button id="settimeout">Set Time Out</button>
+           <button id="cleartimeout"> Clear Time Out</button>
+           <button id="setinterval">Set Interval</button>
+           <button id="clearinterval"> Clear Interval</button>
+
+           <div id="output"></div>
+   </body>
+   <script>
+        var a = '';
+        document.getElementById('settimeout').addEventListener('click',() => {
+            a = setTimeout(getData,3000);
+        })
+
+        function getData(){
+            document.getElementById('output').innerHTML = '<h1>Welcome</h1>';
+            console.log('welcome');
+        }
+
+        document.getElementById('cleartimeout').addEventListener('click',() => {
+            clearTimeout(a);
+        })
+
+        document.getElementById('setinterval').addEventListener('click',() => {
+            a = setInterval(getData,1000);
+        })
+
+        document.getElementById('clearinterval').addEventListener('click',() => {
+            clearInterval(a);
+        })
+
+        // setTimeout(getData,10000);
+
+        // setInterval(() => { 
+        //     document.write('<h1>Welcome</h1></br>');
+        // }, 2000);
+
+
+   </script>
+</html>

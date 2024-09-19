@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>Object</title>
+   </head>
+           
+   <body>
+           
+   </body>
+
+   <script>
+
+    var user = {
+        email : 'ravi@gmail.com',
+        name : 'Ravi',
+    }
+
+    // document.write('Name - '+user.name+'<br>');
+    // document.write('Email - '+user.email+'<br>');
+
+    var userInfo = [user];
+
+    // console.log(userInfo);
+
+    // document.write('Name - '+userInfo[0].name+'<br>');
+    // document.write('Email - '+userInfo[0].email+'<br>');
+
+
+    var userInfo = [
+        {
+            name : 'ravi',
+            email : 'ravi@gmail.com'
+        },
+        {
+            name : 'gopal',
+            email : 'gopal@gmail.com'
+        },
+        {
+            name : 'rohan',
+            email : 'rohan@gmail.com',
+            age : 25
+        }
+    ];
+
+    // for(var i = 0; i < userInfo.length; i++){
+    //     document.write('Name - '+userInfo[i].name+'<br>');
+    //     document.write('Email - '+userInfo[i].email+'<br>');
+    //     document.write('Age - '+userInfo[i].age+'<br>');
+    // }
+
+
+    userInfo.forEach(function(data,index){
+
+        console.log(data);
+        document.write('Name - '+userInfo[index].name+'<br>');
+        document.write('Email - '+data.email+'<br>');
+        document.write('Age - '+data.age+'<br>');
+
+    }
+
+    )
+
+    // document.write('Name - '+userInfo[0].name+'<br>');
+    // document.write('Email - '+userInfo[0].email+'<br>');
+    // document.write('Age - '+userInfo[0].age+'<br>');
+
+    // document.write('Name - '+userInfo[1].name+'<br>');
+    // document.write('Email - '+userInfo[1].email+'<br>');
+    // document.write('Age - '+userInfo[1].age+'<br>');
+
+    // document.write('Name - '+userInfo[2].name+'<br>');
+    // document.write('Email - '+userInfo[2].email+'<br>');
+    // document.write('Age - '+userInfo[2].age+'<br>');
+
+    // console.log(userInfo);
+
+
+   </script>
+           
+</html>

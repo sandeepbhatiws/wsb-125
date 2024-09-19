@@ -1,0 +1,89 @@
+*{
+	padding: 0px;
+	margin: 0px;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+body{
+	background-color: black;
+	font-family: "Arial";
+}
+
+/*Header Section CSS Start*/
+
+.main{
+	width: 1170px;
+	margin: auto;
+	border: 1px solid red;
+	height: 1200px;
+}
+.header{
+	width: 1170px;
+	border: 0px solid red;
+	height: 40px;
+	background-color: #343130;
+	color: #ffffff;
+}
+.header-left{
+	float: left;
+	border: 0px solid green;
+	padding: 5px 10px;
+	font-size: 20px;
+}
+.header-right{
+	float: right;
+	border: 0px solid green;
+	padding: 5px 10px;
+	font-size: 20px;
+}
+.icon{
+	float: left;
+	margin-right: 15px;
+	margin-left: 10px;
+	margin-top: 2px;
+}
+.contact-info{
+	float: left;
+}
+.conatct-link{
+	color: white;
+}
+
+/*Header Section CSS End*/
+
+
+/*Menu Section Css Start*/
+.menu-main{
+	width: 1170px;
+	border: 0px solid red;
+	background-color: white;	
+}
+.logo{
+	border: 0px solid black;
+	float: left;
+	margin-left: 50px;
+	margin-top: 10px;
+}
+.clear{
+	clear: both;
+}
+.menu-outer{
+	float: right;
+	border: 0px solid black;
+	margin-top: 85px;
+	margin-right: 20px;
+}
+.menu{
+	float: left;
+	margin: 15px;
+	padding: 0px 20px;
+	font-size: 20px;
+	font-weight: bold; 
+}
+.menu a{
+	color: black;
+}
+.active{
+	color: #00a8ec !important;
+}
+/*Menu Section Css End*/

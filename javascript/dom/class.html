@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <title>Title</title>
+       <style>
+            .paragraph{
+                background-color: black;
+                color: white;
+                font-size: 18px;
+                padding: 40px;
+                border-radius: 15px;   
+            }
+
+            .display{
+                display: none;
+            }
+       </style>
+   </head>
+           
+   <body>
+        <button onclick="addClass()">Add class</button>
+        <button onclick="removeClass()"> Remove Class</button>
+        <button onclick="toogleClass()"> Toggle Class</button>
+
+        <p class="paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis doloribus similique at nobis, perferendis veritatis? Blanditiis maxime dolore, animi omnis reprehenderit enim corrupti tempore earum vitae accusantium nesciunt iste nulla.</p>
+   </body>
+   <script>
+
+    function addClass(){
+        document.querySelector('.paragraph').classList.add('display');
+    }
+
+    function removeClass(){
+        document.querySelector('.paragraph').classList.remove('display');
+    }
+
+    function toogleClass(){
+        document.querySelector('.paragraph').classList.toggle('display');
+    }
+   </script>
+</html>

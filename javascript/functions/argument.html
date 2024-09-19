@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>Argument Function</title>
+       <style>
+            .row{
+                width: 1400px;
+                margin: auto;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .column{
+                flex-basis: 48%;
+                margin: 1%;
+            }
+            .column img{
+                width: 100%;
+            }
+       </style>
+   </head>
+           
+   <body>
+           <!-- <button onclick="minus(100,50)">click Me</button> -->
+
+        <div class="row">
+            <div class="column">
+                <img src="images/3.jpg" id="image1" onmouseover="mouseOver('images/9.jpg','images/3.jpg')" onmouseout="mouseOut('images/9.jpg','images/3.jpg')"/>
+            </div>
+            <div class="column">
+                <img src="images/9.jpg" id="image2" onmouseover="mouseOver('images/9.jpg','images/3.jpg')" onmouseout="mouseOut('images/9.jpg','images/3.jpg')"/>
+            </div>
+        </div>
+   </body>
+
+   <script>
+
+        function mouseOver(imageName1, imageName2){
+            document.getElementById('image1').src = imageName1;
+            document.getElementById('image2').src = imageName2;
+        }
+
+        function mouseOut(imageName1, imageName2){
+            document.getElementById('image1').src = imageName2;
+            document.getElementById('image2').src = imageName1;
+        }
+
+        // var a = 50;
+        // var b = 20;
+
+        // function add(){
+        //     c = a+b;
+        //     document.write(c);
+        // }
+
+        // function minus(x,y){
+        //     c = x-y;
+        //     document.write(c);
+        // }
+
+        // minus();
+
+   </script>
+           
+</html>
