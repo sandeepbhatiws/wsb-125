@@ -7,3 +7,14 @@
 .phoneicon{
 	border: 1px solid black;
 }
+.menuicon{
+	border: 1px solid white !important;
+}
+.services-card img{
+	width: 76px;
+}
+/*.services-card{
+	max-height: 200px;
+	overflow: hidden;
+	overflow-y: scroll;
+}*/
