@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <title>Magic Box</title>
+       <style>
+        .row{
+            width: 900px;
+            display: flex;
+            flex-wrap: wrap;
+            margin: auto;
+        }
+        .column{
+            flex-basis: 300px;
+            height: 200px;
+            border: 1px solid black;
+            box-sizing: border-box;
+            background-color: gray;
+        }
+       </style>
+   </head>
+
+   <body>
+        <div class="row">
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">1</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">2</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">3</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">4</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">5</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">6</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">7</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">8</div>
+            <div class="column" onmouseover="change_color(this)" onmouseout="change_bg_color(this)">9</div>
+        </div>
+   </body>
+   <script>
+
+    var numbers = [];
+
+    function change_color(x){
+
+        if(numbers.length < 9){
+            if(numbers.includes(x.innerText)){
+            } else {
+                numbers.push(x.innerText);
+            }
+
+            x.style.backgroundColor = 'red';
+        }        
+    }
+
+    function change_bg_color(x){
+        x.style.backgroundColor = 'gray';
+    }
+   </script>
+</html>

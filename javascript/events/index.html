@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <title>Events</title>
+       <style>
+
+       </style>
+   </head>
+
+   <body>
+        <!-- <input type="text" id="input" onkeyup="getValue()"/>        -->
+        <!-- <input type="text" id="input" onchange="getValue()"/>     -->
+
+        <input type="text" id="input" onfocus="getValue()"/>
+
+        <select onchange="getValue()">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+        </select>
+
+        <div id="output"></div>
+   </body>
+   <script>
+
+    function getValue(){
+        var data = document.getElementById('input').value;
+        console.log(data);
+        document.getElementById('output').innerText = data;
+    }
+   </script>
+</html>

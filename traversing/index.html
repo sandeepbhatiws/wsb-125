@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>DOM Traversing Methods</title>
+       <style>
+            *{
+                margin: 0px;
+                padding: 0px;
+            }
+            .row{
+                max-width: 1400px;
+                border: 0px solid red;
+                margin: auto;
+            }
+            .column{
+                border: 1px solid gray;
+                margin: 15px 0px;
+                position: relative;
+            }
+            .column h2 {
+                background-color: black;
+                color: white;
+                padding: 10px 15px;
+            }
+            .column span{
+                position: absolute;
+                right: 30px;
+                top: 10px;
+            }
+            .column p{
+                padding: 10px 15px;
+            }
+            .display{
+                /* display: none; */
+            }
+       </style>
+   </head>
+           
+   <body>
+        <button id="parentNode">Parent Node</button>
+        <button id="children">Childern</button>
+        <button id="firstElement">First Element Child</button>
+        <button id="lastElement">Last Element Child</button>
+        <button id="previousElement">Previous Element Siblings</button>
+        <button id="nextElement">Next Element Siblings</button>
+
+        <div class="row" id="row">
+            <div class="column" id="column1">
+                <h2 class="faqquestions">1. Lorem ipsum dolor sit amet consectetur ? <span> - </span></h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae esse iure cum exercitationem perspiciatis aliquam aperiam eum. Veniam ea at expedita unde, porro reprehenderit illo consectetur voluptatum facilis non.</p>
+            </div>
+            <div class="column" id="column2">
+                <h2>2. Lorem ipsum dolor sit amet consectetur ? <span> + </span></h2>
+                <p class="display">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae esse iure cum exercitationem perspiciatis aliquam aperiam eum. Veniam ea at expedita unde, porro reprehenderit illo consectetur voluptatum facilis non.</p>
+            </div>
+            <div class="column" id="column3">
+                <h2>3. Lorem ipsum dolor sit amet consectetur ? <span> + </span></h2>
+                <p class="display">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae esse iure cum exercitationem perspiciatis aliquam aperiam eum. Veniam ea at expedita unde, porro reprehenderit illo consectetur voluptatum facilis non.</p>
+            </div>
+        </div>
+   </body>
+    <script>
+        document.getElementById('parentNode').addEventListener('click',(event) =>{
+            var output = document.getElementById('column2').parentNode;
+            
+            var output = document.querySelector('.faqquestions').parentNode;
+            console.log(output);
+        });
+
+        document.getElementById('children').addEventListener('click',(event) =>{
+            var output = document.getElementById('column2').children;
+
+            var output = document.getElementById('row').children;
+            console.log(output);
+        });
+
+        document.getElementById('firstElement').addEventListener('click',(event) =>{
+            var output = document.getElementById('column2').firstElementChild;
+
+            var output = document.getElementById('row').firstElementChild;
+            console.log(output);
+        });
+
+        document.getElementById('lastElement').addEventListener('click',(event) =>{
+            var output = document.getElementById('column2').lastElementChild;
+
+            var output = document.getElementById('row').lastElementChild;
+            console.log(output);
+        });
+
+        document.getElementById('previousElement').addEventListener('click',(event) =>{
+            var output = document.getElementById('column2').previousElementSibling;
+
+            var output = document.getElementById('row').previousElementSibling;
+            console.log(output);
+        });
+
+        document.getElementById('nextElement').addEventListener('click',(event) =>{
+            var output = document.getElementById('column2').nextElementSibling;
+
+            var output = document.getElementById('row').nextElementSibling;
+            console.log(output);
+        });
+        
+    </script>
+</html>

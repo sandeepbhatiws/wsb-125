@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>DOM Traversing Methods</title>
+       <style>
+            *{
+                margin: 0px;
+                padding: 0px;
+            }
+            .row{
+                max-width: 1400px;
+                border: 0px solid red;
+                margin: auto;
+            }
+            .column{
+                border: 1px solid gray;
+                margin: 15px 0px;
+                position: relative;
+            }
+            .column h2 {
+                background-color: black;
+                color: white;
+                padding: 10px 15px;
+            }
+            .column span{
+                position: absolute;
+                right: 30px;
+                top: 10px;
+            }
+            .column p{
+                padding: 10px 15px;
+            }
+            .display{
+                display: none;
+            }
+       </style>
+   </head>
+           
+   <body>
+        <div class="row" id="row">
+            <div class="column" id="column1">
+                <h2 class="faqquestions">1. Lorem ipsum dolor sit amet consectetur ? <span> - </span></h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae esse iure cum exercitationem perspiciatis aliquam aperiam eum. Veniam ea at expedita unde, porro reprehenderit illo consectetur voluptatum facilis non.</p>
+            </div>
+            <div class="column" id="column2">
+                <h2>2. Lorem ipsum dolor sit amet consectetur ? <span> + </span></h2>
+                <p class="display">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae esse iure cum exercitationem perspiciatis aliquam aperiam eum. Veniam ea at expedita unde, porro reprehenderit illo consectetur voluptatum facilis non.</p>
+            </div>
+            <div class="column" id="column3">
+                <h2>3. Lorem ipsum dolor sit amet consectetur ? <span> + </span></h2>
+                <p class="display">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio molestiae esse iure cum exercitationem perspiciatis aliquam aperiam eum. Veniam ea at expedita unde, porro reprehenderit illo consectetur voluptatum facilis non.</p>
+            </div>
+        </div>
+   </body>
+    <script>
+        
+        const allfaqs = document.querySelectorAll('.column h2');
+
+        allfaqs.forEach((element,index) => {
+
+            element.addEventListener('click',(e) => {
+                element.nextElementSibling.classList.toggle('display');
+
+                if(element.children[0].innerText == '+'){
+                    element.children[0].innerText = '-';
+                } else {
+                    element.children[0].innerText = '+';
+                }
+                // console.log(element.children[0].innerText);
+
+                allfaqs.forEach((elem,ind) => {
+                    if(element != elem){
+                        elem.nextElementSibling.classList.add('display');
+                        elem.children[0].innerText = '+';
+
+                        console.log(elem);
+                    }
+                });
+            })
+
+            
+
+        })
+    
+    </script>
+</html>

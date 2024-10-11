@@ -1,0 +1,28 @@
+*{
+	padding: 0px;
+	margin: 0px;
+}
+.row{
+	background-image: url('../images/1.jpg');
+	background-repeat: no-repeat;
+	width: 1200px;
+	height: 700px;
+	color: white;
+	font-size: 20px;
+	border: 1px solid black;
+	/*background-position: top center;*/
+	/*background-size: contain;*/
+	background-size: 100% 100%;
+}
+.row2{
+	background-image: url('../images/3.jpg');
+	background-repeat: no-repeat;
+	/*background-repeat: repeat-x;*/
+	/*background-repeat: repeat-y;*/
+	background-position: center center;
+	width: 500px;
+	height: 500px;
+	background-size: contain;
+	border: 1px solid black;
+	margin-top: 20px;
+}

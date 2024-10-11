@@ -1,0 +1,20 @@
+.header-section{
+	background-color: #E21D24;
+}
+.logo{
+	width: 260px;
+}
+.phoneicon{
+	border: 1px solid black;
+}
+.menuicon{
+	border: 1px solid white !important;
+}
+.services-card img{
+	width: 76px;
+}
+/*.services-card{
+	max-height: 200px;
+	overflow: hidden;
+	overflow-y: scroll;
+}*/

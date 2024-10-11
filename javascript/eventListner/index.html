@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <title>Event Listner</title>
+   </head>
+   
+   
+   
+   <body>
+        <!-- <button id="button" onclick="getValue()">Button 1</button>
+        <button id="button">Button 2</button>
+        <button id="button">Button 3</button> -->
+        <button id="button">Button 4</button>
+
+
+        <form id="userform">
+            <input type="text" name="username"/>
+            <button type="submit">submit</button>
+        </form>
+   </body>
+   
+   <script>
+    // function getValue(){
+    //     console.log('hello');
+    // }
+
+
+    // document.getElementById('button').addEventListener('click',getValue);
+
+    // document.getElementById('button').addEventListener('click',function(){
+    //     console.log('welcome');
+    // });
+
+    // document.getElementById('button').addEventListener('click',() => {
+    //     console.log('welcome');
+    // });
+
+
+    document.getElementById('userform').addEventListener('submit',(event)=> {
+        event.preventDefault();
+        console.log(event.target.username.value);
+
+        // event.target.username.value = '';
+
+        document.getElementById('userform').reset();
+    })
+
+        
+   </script>
+</html>

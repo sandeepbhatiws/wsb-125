@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animation Properties</title>
+	<style type="text/css">
+
+		/*@keyframes colorChange{
+			from {
+				background-color: red;
+			}
+			to {
+				background-color: green;
+			}
+		}*/
+
+		@keyframes colorChange{
+			0% {
+				background-color: red;
+				transition: 2s;
+			}
+			25% {
+				background-color: pink;
+				transition: 2s;
+			}
+			50% {
+				background-color: black;
+				transition: 2s;
+			}
+			100% {
+				background-color: green;
+				transition: 2s;
+			}
+		}
+
+		.welcome{
+			width: 300px;
+			margin: auto;
+			padding: 15px 20px;
+			text-align: center;
+			border-radius: 20px;
+			background-color: black;
+			color: white;
+			font-size: 24px;
+			font-weight: bold;
+			animation: colorChange;
+			transition: 2s;
+			animation-duration: 5s;
+			animation-iteration-count: infinite;
+			animation-delay: 5s;
+		}
+
+		@keyframes wave{
+			0%{
+				opacity: 0;
+				transform: scale(1);
+			}
+			50% {
+				opacity: 1;
+				transform: scale(1.5);
+			}
+			100%{
+				opacity: 0;
+				transform: scale(1);
+			}
+		}
+
+		.button{
+			text-align: center;
+			margin-top: 30px;
+		}
+		button{
+			padding: 15px;
+			text-align: center;
+			border-radius: 15px;
+			background-color: brown;
+			border: 0px solid;
+			margin: auto;
+			color: white;
+			z-index: 9999
+			font-size: 22px;
+			font-weight: bold;
+			position: relative;
+
+		}
+		.read{
+			background-color: rgb(151 62 56 / 55%);
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 15px;
+			top: 0px;
+			left: 0px;
+			opacity: 0;
+			animation: wave;
+			animation-duration: 2s;
+			animation-timing-function: ease;
+			animation-iteration-count: infinite; 
+		}
+	</style>
+</head>
+<body>
+	<div class="welcome">Welcome to Wscube Tech</div>
+
+	<div class="button">
+		<button>
+			Enquiry Now
+			<div class="read"></div>
+		</button>
+	</div>
+</body>
+</html>

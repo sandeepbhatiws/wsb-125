@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <title>Title</title>
+   </head>
+           
+   <body>
+        <input type="text" value="" id="input_1"/>
+        
+        <input type="text" value="" id="input_2"/>
+
+        <button onclick="changeData()">Swap data</button>
+
+
+        <p class="paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis doloribus similique at nobis, perferendis veritatis? Blanditiis maxime dolore, animi omnis reprehenderit enim corrupti tempore earum vitae accusantium nesciunt iste nulla.</p>
+
+
+        <button onclick="addCss()">Add CSS Property</button>
+   </body>
+   <script>
+
+    function changeData(){
+        var input_1 = document.getElementById('input_1').value;
+
+        document.querySelector('#input_2').value = input_1;
+    }
+
+    function addCss(){
+        document.querySelector('.paragraph').style.color = 'red';
+        document.querySelector('.paragraph').style.backgroundColor = 'black';
+    }
+   </script>
+</html>
