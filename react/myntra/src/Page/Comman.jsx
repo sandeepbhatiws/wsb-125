@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from './Header'
 import { Button, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap'
 import '../Custom.css';
@@ -7,6 +7,15 @@ import FilterLeft from './FilterLeft';
 import RightSide from './RightSide';
 
 export default function Comman() {
+
+  const [page,setPage] = useState(1);
+  const [sorting,setSorting] = useState(3);
+  const [checkedCategories, setCheckedCategories] = useState([]);
+
+  const filterSorting = (value) => {
+    setSorting(value);
+  }
+
   return (
     <>
       <Header />
@@ -43,14 +52,14 @@ export default function Comman() {
           id="dropdown-menu-align-responsive-1"
           className="sort_button"
         >
-                <Dropdown.Item>Name :  A to Z</Dropdown.Item>
-                <Dropdown.Item>Name : Z to A</Dropdown.Item>
-                <Dropdown.Item>Price : Low to High</Dropdown.Item>
-                <Dropdown.Item>Price : High to Low</Dropdown.Item>
-                <Dropdown.Item>Discounted Price : Low to High</Dropdown.Item>
-                <Dropdown.Item>Discounted Price : High to Low</Dropdown.Item>
-                <Dropdown.Item>Rating : Low to High</Dropdown.Item>
-                <Dropdown.Item>Rating : High to Low</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(1)}>Name :  A to Z</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(2)}>Name : Z to A</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(3)}>Price : Low to High</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(4)}>Price : High to Low</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(5)}>Discounted Price : Low to High</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(6)}>Discounted Price : High to Low</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(7)}>Rating : Low to High</Dropdown.Item>
+                <Dropdown.Item onClick={ () => filterSorting(8)}>Rating : High to Low</Dropdown.Item>
             
               </DropdownButton>
             </Dropdown>
@@ -62,8 +71,8 @@ export default function Comman() {
       <Container fluid className='lift_sidebar pb-3'>
         <Row className='products_container'>
         
-        <FilterLeft/>
-        <RightSide/>
+        <FilterLeft checkedCategories = { checkedCategories } setCheckedCategories = {setCheckedCategories}/>
+        <RightSide page={page} sorting={sorting} checkedCategories = { checkedCategories }/>
           
         </Row>
       </Container>

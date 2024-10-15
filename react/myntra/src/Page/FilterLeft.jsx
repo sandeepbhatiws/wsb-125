@@ -1,27 +1,53 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap'
 
-export default function FilterLeft() {
+export default function FilterLeft({setCheckedCategories, checkedCategories}) {
 
     const [categories,setCategories] = useState([]);
     const [brands,setBrands] = useState([]);
     
 
     useEffect(() => {
-        fetch('https://wscubetech.co/ecommerce-api/categories.php')
-        .then(res => res.json())
-        .then((success) => {
-            setCategories(success.data)
-        });
+
+      axios.get('https://wscubetech.co/ecommerce-api/categories.php')
+      .then((success) => {
+        setCategories(success.data.data)
+      })
+      .catch((error) => {
+
+      });
     },[]);
 
     useEffect(() => {
-        fetch('https://wscubetech.co/ecommerce-api/brands.php')
-        .then(res => res.json())
-        .then((success) => {
-            setBrands(success.data)
-        });
+      axios.get('https://wscubetech.co/ecommerce-api/brands.php')
+      .then((success) => {
+        setBrands(success.data.data)
+      })
+      .catch((error) => {
+
+      });
     },[]);
+
+    const filterCategories = (value) => {
+      
+      if(checkedCategories.includes(value)){
+        const final = checkedCategories.filter((v,i) => {
+          if(v != value){
+            return  v;
+          }
+        })
+        setCheckedCategories(final);
+        console.log(final);
+      } else {
+        var final = [value,...checkedCategories];
+        setCheckedCategories(final);
+        console.log(final);
+      }
+
+      
+      
+    }
 
   return (
     <Col className='categories' lg={2}>
@@ -32,8 +58,8 @@ export default function FilterLeft() {
                 {
                     categories.map((v,i) => {
                         return(
-                            <li key={i}>
-                                <input type='checkbox' />{v.name}</li>
+                            <li key={i} for={v.slug} onClick={() => filterCategories(v.slug)}>
+                                <input type='checkbox' id={v.slug} />{v.name}</li>
                         );
                     })
                 }
