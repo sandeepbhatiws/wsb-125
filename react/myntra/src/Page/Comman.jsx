@@ -11,6 +11,8 @@ export default function Comman() {
   const [page,setPage] = useState(1);
   const [sorting,setSorting] = useState(3);
   const [checkedCategories, setCheckedCategories] = useState([]);
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
 
   const filterSorting = (value) => {
     setSorting(value);
@@ -71,8 +73,8 @@ export default function Comman() {
       <Container fluid className='lift_sidebar pb-3'>
         <Row className='products_container'>
         
-        <FilterLeft checkedCategories = { checkedCategories } setCheckedCategories = {setCheckedCategories}/>
-        <RightSide page={page} sorting={sorting} checkedCategories = { checkedCategories }/>
+        <FilterLeft checkedCategories = { checkedCategories } setCheckedCategories = {setCheckedCategories} setPriceFrom = { setPriceFrom} setPriceTo= {setPriceTo}/>
+        <RightSide page={page} sorting={sorting} checkedCategories = { checkedCategories } priceFrom = { priceFrom} priceTo= {priceTo}/>
           
         </Row>
       </Container>

@@ -3,7 +3,7 @@ import Product from './Product';
 import { Button, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap'
 import axios from 'axios';
 
-export default function RightSide({page, sorting, checkedCategories}) {
+export default function RightSide({page, sorting, checkedCategories, priceFrom, priceTo}) {
 
     const [products,setProducts] = useState([]);
 
@@ -15,13 +15,13 @@ export default function RightSide({page, sorting, checkedCategories}) {
                 limit : 12,
                 sorting : sorting,
                 name : '',
-                price_from : '',
-                price_to : '',
+                price_from : priceFrom,
+                price_to : priceTo,
                 discount_from : '',
                 discount_to : '',
                 rating: '',
                 brands : '',
-                categories : JSON.stringify(checkedCategories)
+                categories : checkedCategories.join(',')
             }
         })
         .then((success) => {
@@ -30,7 +30,7 @@ export default function RightSide({page, sorting, checkedCategories}) {
         .catch((error) => {
 
         });
-    },[sorting,checkedCategories]);
+    },[sorting,checkedCategories,priceTo,priceFrom]);
 
   return (
     <Col lg={10} style={{ backgroundColor: "#fafafa" }}>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap'
 
-export default function FilterLeft({setCheckedCategories, checkedCategories}) {
+export default function FilterLeft({setCheckedCategories, checkedCategories, setPriceFrom, setPriceTo}) {
 
     const [categories,setCategories] = useState([]);
     const [brands,setBrands] = useState([]);
@@ -49,6 +49,11 @@ export default function FilterLeft({setCheckedCategories, checkedCategories}) {
       
     }
 
+    const filterPrice = (from,to) => {
+      setPriceFrom(from);
+      setPriceTo(to);
+    }
+
   return (
     <Col className='categories' lg={2}>
 
@@ -58,8 +63,10 @@ export default function FilterLeft({setCheckedCategories, checkedCategories}) {
                 {
                     categories.map((v,i) => {
                         return(
-                            <li key={i} for={v.slug} onClick={() => filterCategories(v.slug)}>
-                                <input type='checkbox' id={v.slug} />{v.name}</li>
+                            <li key={i}  onClick={() => filterCategories(v.slug)}>
+                                <input type='checkbox' id={v.slug} />
+                                <label for={v.slug}>{v.name}</label>
+                                </li>
                         );
                     })
                 }
@@ -83,10 +90,22 @@ export default function FilterLeft({setCheckedCategories, checkedCategories}) {
             <div className='cat_items'>
               <h2>PRICE</h2>
               <ul>
-                <li><input type='checkbox' />Rs. 0 to Rs. 250</li>
-                <li><input type='checkbox' />Rs. 251 to Rs. 500</li>
-                <li><input type='checkbox' />Rs. 501 to Rs. 1000</li>
-                <li><input type='checkbox' />Rs. 1000 and above </li>
+                <li onClick={() => filterPrice(0,250) }>
+                  <input type='radio' name='price' id='price1'/>
+                  <label for="price1">Rs. 0 to Rs. 250</label>
+                </li>
+                <li onClick={() => filterPrice(251,500) }>
+                  <input type='radio' name='price' id='price2'/>
+                  <label for="price2">Rs. 251 to Rs. 500</label>
+                </li>
+                <li onClick={() => filterPrice(501,1000) }>
+                  <input type='radio' name='price' id='price3'/>
+                  <label for="price3">Rs. 501 to Rs. 1000</label>
+                </li>
+                <li onClick={() => filterPrice(1000, '') }>
+                  <input type='radio' name='price' id='price4'/>
+                  <label for="price4">Rs. 1000 and above </label>
+                </li>
               </ul>
             </div>
 
