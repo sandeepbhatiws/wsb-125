@@ -1,10 +1,14 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { CartContext } from './MainContext/MainContext';
+import { toast, ToastContainer } from 'react-toastify';
   
   export default function ProductListing() {
 
     const params = useParams();
+
+    let {setCartItems, cartItems} = useContext(CartContext);
 
     const [products,setProducts] = useState([]);
 
@@ -16,10 +20,25 @@ import { Link, useParams } from 'react-router-dom'
         });
       },[]);
 
+    const addtoCart = (data) => {
+      const productData = {
+        id : data.id,
+        name : data.title,
+        price : data.price,
+        image : data.thumbnail,
+        qty : 1
+      }
 
+      const finalData = [productData, ...cartItems];
+
+      setCartItems(finalData);
+      toast.success('Product successfully added to cart !!')
+
+    }
 
     return (
       <div className="bg-white">
+        <ToastContainer/>
         <div className="max-w-2xl px-4 py-16 mx-auto sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
   
@@ -37,7 +56,7 @@ import { Link, useParams } from 'react-router-dom'
                   <div>
                     <h3 className="text-sm text-gray-700">
                       <Link to={ `/product-details/${product.id}` }>
-                        <span aria-hidden="true" className="absolute inset-0" />
+                        
                         {product.title}
                       </Link>
                     </h3>
@@ -45,6 +64,7 @@ import { Link, useParams } from 'react-router-dom'
                   </div>
                   <p className="text-sm font-medium text-gray-900">{product.price}</p>
                 </div>
+                <button className='px-5 py-2 text-sm rounded-full text-white border-2 border-[#007bff] bg-[#007bff] hover:bg-[#004bff]' onClick={() => addtoCart(product) }>Add To Cart</button>
               </div>
             ))}
           </div>

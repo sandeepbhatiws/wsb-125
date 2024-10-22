@@ -8,6 +8,7 @@ import Home from './Home.jsx';
 import AboutUs from './AboutUs.jsx';
 import ProductListing from './ProductListing.jsx';
 import CommonRoute from './CommonRoute.jsx';
+import MainContext from './MainContext/MainContext.jsx';
 
 // const router = createBrowserRouter([
 //   {
@@ -75,5 +76,7 @@ const router = createBrowserRouter(
 
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <MainContext>
+    <RouterProvider router={router} />
+  </MainContext>
 )
