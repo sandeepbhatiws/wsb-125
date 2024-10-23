@@ -9,6 +9,7 @@ import AboutUs from './AboutUs.jsx';
 import ProductListing from './ProductListing.jsx';
 import CommonRoute from './CommonRoute.jsx';
 import MainContext from './MainContext/MainContext.jsx';
+import Cart from './Cart.jsx';
 
 // const router = createBrowserRouter([
 //   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter(
     <>
       <Route path="/" element={<CommonRoute/>}>
         <Route path='/' element={<Home />}></Route>
+      </Route>
+
+      <Route path="carts" element={<CommonRoute/>}>
+        <Route path='/carts' element={<Cart />}></Route>
       </Route>
 
       <Route path="categories/:name" element={<CommonRoute/>} >

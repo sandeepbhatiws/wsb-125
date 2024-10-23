@@ -21,17 +21,39 @@ import { toast, ToastContainer } from 'react-toastify';
       },[]);
 
     const addtoCart = (data) => {
-      const productData = {
-        id : data.id,
-        name : data.title,
-        price : data.price,
-        image : data.thumbnail,
-        qty : 1
+
+      var checkCartItems = cartItems.filter((v) => {
+        if(v.id == data.id){
+          return v;
+        }
+      })
+
+      if(checkCartItems.length == 0){
+        const productData = {
+          id : data.id,
+          name : data.title,
+          price : data.price,
+          image : data.thumbnail,
+          qty : 1
+        }
+  
+        const finalData = [productData, ...cartItems];
+  
+        setCartItems(finalData);
+      } else {
+        var checkCartItems = cartItems.map((v) => {
+          if(v.id == data.id){
+            v.qty++;
+            return v;
+          } else {
+            return v;
+          }
+        })
+
+        setCartItems(checkCartItems);
       }
 
-      const finalData = [productData, ...cartItems];
-
-      setCartItems(finalData);
+      
       toast.success('Product successfully added to cart !!')
 
     }
