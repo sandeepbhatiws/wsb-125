@@ -8,13 +8,11 @@ export default function Cart() {
     let [total, setTotal] = useState(0);
 
     useEffect(() => {
+        var sum = 0; 
         cartItems.forEach((v) => {
-            var sum = total + (v.qty*v.price);
-            console.log(sum);
-            setTotal(sum);
+          sum += v.qty*v.price;
         })
-        
-        // setTotal(sum);
+        setTotal(sum);
     },[cartItems]);    
     
 
@@ -123,7 +121,7 @@ export default function Cart() {
         <div class="border-t mt-8">
           <div class="flex font-semibold justify-between py-6 text-sm uppercase">
             <span>Total cost</span>
-            <span>${ total }</span>
+            <span>${ total.toFixed(2) }</span>
           </div>
           <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
         </div>
