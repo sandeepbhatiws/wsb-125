@@ -23,6 +23,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -40,17 +41,17 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white">
+    <header className="bg-white shadow">
       <nav aria-label="Global" className="flex items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
               alt=""
               src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
               className="w-auto h-8"
             />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -107,9 +108,9 @@ export default function Header() {
             </PopoverPanel>
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
-          </a>
+          <Link to="/view-data" className="text-sm font-semibold leading-6 text-gray-900">
+            View Data
+          </Link>
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Marketplace
           </a>
@@ -118,9 +119,14 @@ export default function Header() {
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/login" className="text-sm font-semibold leading-6 text-gray-900">
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          </Link>
+        </div>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <Link to="/register" className="text-sm font-semibold leading-6 text-gray-900">
+            Register <span aria-hidden="true">&rarr;</span>
+          </Link>
         </div>
       </nav>
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
