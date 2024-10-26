@@ -15,6 +15,7 @@ import EnquiryData from './Components/EnquiryData';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './Components/Login';
 import Register from './Components/Register';
+import MainContext from './MainContext/MainContext';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,8 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <MainContext>
     <RouterProvider router={router} />
+    </MainContext>
   </StrictMode>,
 )

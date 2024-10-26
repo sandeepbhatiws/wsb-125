@@ -1,8 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { getDatabase, ref, onValue } from "firebase/database";
 import app from '../config/firebase';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../MainContext/MainContext';
 
 export default function EnquiryData() {
+
+    const navigate = useNavigate();
+    let {isLogin} = useContext(CartContext);
+
+    useEffect(()=> {
+        if(isLogin == false){
+            navigate('/register');
+        }
+    },[isLogin]);
+
 
     const [contactData, setContactData] = useState([]);
 
