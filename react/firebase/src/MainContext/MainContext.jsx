@@ -7,9 +7,8 @@ export default function MainContext({children}) {
 
     var userLogin = JSON.parse(localStorage.getItem('userLogin'));
     var userLogin = userLogin ? true : false;
-
-
     let [isLogin, setLogin] = useState(userLogin);
+
     let contextData = {isLogin, setLogin}
 
   return (
