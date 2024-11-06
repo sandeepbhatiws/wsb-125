@@ -7,11 +7,13 @@ export default function ProductListing({params}) {
         <h1 class="text-3xl text-center">Product Listing { params.slug[0] }</h1>
         <div class="w-[1190px] mx-auto my-auto">
             <div class="flex flex-col w-full h-auto mt-[3%]">
-                <div class="flex flex-wrap"></div>
+                <div class="flex flex-wrap">
                 <ProductCard/>
                 <ProductCard/>
                 <ProductCard/>
                 <ProductCard/>
+                </div>
+                
             </div>
         </div>
     </div>
