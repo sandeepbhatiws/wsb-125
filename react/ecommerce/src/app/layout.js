@@ -1,4 +1,5 @@
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 import Footer from "./Components/Common/Footer";
 import Header from "./Components/Common/Header";

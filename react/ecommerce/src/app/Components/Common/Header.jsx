@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from "next/image";
+import Link from 'next/link'
 
 export default function Header() {
   return (
@@ -60,8 +61,8 @@ export default function Header() {
       </form>
 
       <div class="hidden gap-3 md:!flex">
-        <a
-          href="wishlist.html"
+        <Link
+          href="/wishList"
           class="flex cursor-pointer flex-col items-center justify-center"
         >
           <svg
@@ -80,10 +81,10 @@ export default function Header() {
           </svg>
 
           <p class="text-xs">Wishlist</p>
-        </a>
+        </Link>
 
-        <a
-          href="cart.html"
+        <Link
+          href="/cart"
           class="flex cursor-pointer flex-col items-center justify-center"
         >
           <svg
@@ -99,10 +100,10 @@ export default function Header() {
             />
           </svg>
 
-          <p class="text-xs">Cart</p>
-        </a>
+        <p class="text-xs">cart</p>
+        </Link>
 
-        <a
+        <Link
           href="account-page.html"
           class="relative flex cursor-pointer flex-col items-center justify-center"
         >
@@ -131,7 +132,7 @@ export default function Header() {
           </svg>
 
           <p class="text-xs">Account</p>
-        </a>
+        </Link>
       </div>
     </header>
     <section
@@ -245,7 +246,7 @@ export default function Header() {
       </form>
       <ul class="text-center font-medium">
         <li class="py-2"><a href="index.html">Home</a></li>
-        <li class="py-2"><a href="catalog.html">Catalog</a></li>
+        <li class="py-2"><Link href="/cate">Catalog</Link></li>
         <li class="py-2"><a href="about-us.html">About Us</a></li>
         <li class="py-2"><a href="contact-us.html">Contact Us</a></li>
       </ul>

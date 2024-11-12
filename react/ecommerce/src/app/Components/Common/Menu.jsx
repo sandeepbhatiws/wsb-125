@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 export default function Menu() {
@@ -31,16 +32,14 @@ export default function Menu() {
         </button>
 
         <div class="mx-7 flex gap-8">
-          <a
+          <Link
             class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
-            href="index.html"
-            >Home</a
-          >
-          <a
+            href="/"
+            >Home</Link>
+          <Link
             class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
-            href="catalog.html"
-            >Catalog</a
-          >
+            href="/catelog"
+            >Catelog</Link>
           <a
             class="font-light text-white duration-100 hover:text-yellow-400 hover:underline"
             href="about-us.html"
