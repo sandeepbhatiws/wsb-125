@@ -6,32 +6,27 @@ import { useParams } from 'next/navigation'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function FilterProduct({ categories, setCategories }) {
+export default function FilterProduct({category,setCategories}) {
 
   let [drop, SetDrop] = useState(0)
   let Drop = () => {
     SetDrop(!drop)
+  } 
 
-  }
-
-  const params = useParams();
-
-  if(params.slug != ''){
-    setCategories(params.slug);
-  }
   
-  
-  // console.log(categories);
 
   const [products,setProducts] = useState([]);
   const [loading,setLoading] = useState(true);
+  const [limit,setLimit] = useState(15);
   
+  // console.log(category);
 
   useEffect(() => {
+    console.log(category);
     axios.get('https://wscubetech.co/ecommerce-api/products.php', {
       params: {
         page : '',
-        limit : 15,
+        limit : limit,
         sorting : '',
         name : '',
         price_from : '',
@@ -40,17 +35,18 @@ export default function FilterProduct({ categories, setCategories }) {
         discount_to : '',
         rating : '',
         brands : '',
-        categories : categories.toString()
+        categories : category.toString()
       }
     })
     .then((response) => {
+      // console.log(response.data.data);
       setProducts(response.data.data);
       setLoading(false);
     })
     .catch(function (error) {
       toast.error('Something went Wrong');
     });
-  },[categories]);
+  },[]);
 
   
 
@@ -58,7 +54,7 @@ export default function FilterProduct({ categories, setCategories }) {
     <>
       <ToastContainer/>
       <div>
-        <div class="mb-5 flex  justify-end px-5">
+        <div className="flex justify-end px-5 mb-5">
            <div className='relative w-40 '>
               <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" onClick={Drop} class="text-white bg-[#4C1D95] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 uppercase" type="button">Shorting <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />

@@ -10,7 +10,7 @@ export default function Footer() {
       <div class="ml-5">
         <img
           class="mt-10 mb-5"
-          src="images/company-logo.svg"
+          src="/images/company-logo.svg"
           alt="company logo"
         />
         <p class="pl-0">
@@ -21,21 +21,21 @@ export default function Footer() {
           <a href="https://github.com/bbulakh">
             <img
               class="h-5 w-5 cursor-pointer"
-              src="images/github.svg"
+              src="/images/github.svg"
               alt="github icon"
             />
           </a>
           <a href="https://t.me/b_bulakh">
             <img
               class="h-5 w-5 cursor-pointer"
-              src="images/telegram.svg"
+              src="/images/telegram.svg"
               alt="telegram icon"
             />
           </a>
           <a href="https://www.linkedin.com/in/bogdan-bulakh-393284190/">
             <img
               class="h-5 w-5 cursor-pointer"
-              src="images/linkedin.svg"
+              src="/images/linkedin.svg"
               alt="twitter icon"
             />
           </a>

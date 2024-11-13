@@ -1,11 +1,22 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from './Sidebar'
 import FilterProduct from './FilterProduct'
+import { useParams } from 'next/navigation';
 
 export default function Productlisting() {
-  const [categories,setCategories] = useState([]);
+
+  const params = useParams();
+  
+  if(params.slug != undefined){
+    var slug = [params.slug];
+  } else {
+    var slug = [];
+  }
+
+  const [category,setCategories] = useState(slug);
+  
   return (
     <>
     <nav class="mx-auto w-full mt-4 max-w-[1200px] px-5">
@@ -36,7 +47,7 @@ export default function Productlisting() {
         </nav>
     <section  class="container mx-auto flex-grow max-w-[1200px] border-b py-5 lg:flex lg:flex-row lg:py-10">
     <Sidebar/>
-    <FilterProduct categories = {categories} setCategories = {setCategories}/>
+    <FilterProduct category = {category} setCategories = {setCategories}/>
     </section>
     </>
   )

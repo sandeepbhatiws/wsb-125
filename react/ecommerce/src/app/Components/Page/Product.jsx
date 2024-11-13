@@ -1,8 +1,36 @@
-import React from 'react'
+"use client";
+import axios from 'axios';
+import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function Product() {
+
+  const params = useParams();
+  
+  if(params.id != undefined){
+    var id = params.id;
+  } else {
+    var id = '';
+  }
+
+  const [productDetails, setProductDetails] = useState('');
+  const [productImages, setProductImages] = useState([]);
+
+
+  useEffect(() => {
+    axios.get(`https://wscubetech.co/ecommerce-api/productdetalis.php?id=${id}`).then((response) => {
+      setProductDetails(response.data.product);
+      setProductImages(response.data.product.multiple_images);
+    }).catch(() => {
+      toast.error('Something went wrong');
+    })
+  })
+
+
   return (
     <>
+      <ToastContainer/>
        {/* <!-- breadcrumbs  --> */}
 
 <nav class="mx-auto w-full mt-4 max-w-[1200px] px-5">
@@ -27,8 +55,8 @@ export default function Product() {
     <li>
       <span class="mx-2 text-gray-500">&gt;</span>
     </li>
-
-    <li class="text-gray-500">Big italian sofa</li>
+    <li class="text-gray-500">{productDetails.category} / </li>
+    <li class="text-gray-500">{productDetails.name}</li>
   </ul>
 </nav>
 {/* <!-- /breadcrumbs  --> */}
@@ -42,42 +70,23 @@ class="container flex-grow mx-auto max-w-[1200px] border-b py-5 lg:grid lg:grid-
 <div class="container mx-auto px-4">
   <img
     class="w-full"
-    src="images/product-bigsofa.png"
+    src={productDetails.image}
     alt="Sofa image"
   />
 
   <div class="mt-3 grid grid-cols-4 gap-4">
-    <div>
+    { productImages.map( (image) => {
+        return(
+          <div>
       <img
         class="cursor-pointer"
-        src="images/kitchen.png"
+        src={image}
         alt="kitchen image"
       />
     </div>
-
-    <div>
-      <img
-        class="cursor-pointer"
-        src="images/living-room.png"
-        alt="kitchen image"
-      />
-    </div>
-
-    <div>
-      <img
-        class="cursor-pointer"
-        src="images/outdoors.png"
-        alt="kitchen image"
-      />
-    </div>
-
-    <div>
-      <img
-        class="cursor-pointer"
-        src="images/product-chair.png"
-        alt="kitchen image"
-      />
-    </div>
+        )
+    }) }
+    
   </div>
   {/* <!-- /image gallery  --> */}
 </div>
