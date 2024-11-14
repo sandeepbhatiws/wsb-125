@@ -22,8 +22,13 @@ export default function ProductCard({ productInformation }) {
               <div
                 class="absolute flex h-full w-full items-center justify-center gap-3 opacity-0 duration-150 hover:opacity-100"
               >
-                <Link
+                {/* <Link
                   href={ `/catelog/product-details/${productInformation.id}` }
+                  class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-amber-400"
+                > */}
+
+                <Link
+                  href={ `/categories/${productInformation.brand_slug}/${productInformation.category_slug}/${productInformation.id}` }
                   class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-amber-400"
                 >
                   <svg

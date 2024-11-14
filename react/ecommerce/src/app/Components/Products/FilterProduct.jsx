@@ -6,13 +6,12 @@ import { useParams } from 'next/navigation'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function FilterProduct({category,setCategories}) {
+export default function FilterProduct({category,setCategories,brands, setBrands}) {
 
   let [drop, SetDrop] = useState(0)
   let Drop = () => {
     SetDrop(!drop)
   } 
-
   
 
   const [products,setProducts] = useState([]);
@@ -34,8 +33,8 @@ export default function FilterProduct({category,setCategories}) {
         discount_from : '',
         discount_to : '',
         rating : '',
-        brands : '',
-        categories : category.toString()
+        brands : brands.toString() ? brands.toString() : '',
+        categories : category.toString() ? category.toString() : ''
       }
     })
     .then((response) => {

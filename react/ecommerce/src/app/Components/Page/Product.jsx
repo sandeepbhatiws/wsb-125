@@ -4,15 +4,9 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 
-export default function Product() {
+export default function Product({id}) {
 
-  const params = useParams();
-  
-  if(params.id != undefined){
-    var id = params.id;
-  } else {
-    var id = '';
-  }
+  // console.log(id);
 
   const [productDetails, setProductDetails] = useState('');
   const [productImages, setProductImages] = useState([]);
