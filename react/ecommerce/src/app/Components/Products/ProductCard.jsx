@@ -1,13 +1,16 @@
 'use client';
+import { addToCart } from '@/app/Redux ToolKit/Slices/cart';
 import Link from 'next/link'
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 
 export default function ProductCard({ productInformation }) {
   let [drop, SetDrop] = useState(0)
   let Drop = () => {
     SetDrop(!drop)
-
   }
+
+  const dispatch = useDispatch()
 
   return (
     <>
@@ -147,7 +150,7 @@ export default function ProductCard({ productInformation }) {
               </div>
 
               <div>
-                <button class="my-5 h-10 w-full bg-violet-900 text-white">
+                <button class="my-5 h-10 w-full bg-violet-900 text-white" onClick={() => dispatch(addToCart(productInformation))}>
                   Add to cart
                 </button>
               </div>

@@ -1,8 +1,14 @@
 import React from 'react'
 import Image from "next/image";
 import Link from 'next/link'
+import { useSelector } from 'react-redux';
 
 export default function Header() {
+
+  const cartItems = useSelector((state) => state.cart.value);
+
+  // console.log(cartItems);
+  
   return (
     <>
     <header className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-5">
@@ -100,7 +106,7 @@ export default function Header() {
             />
           </svg>
 
-        <p class="text-xs">cart</p>
+        <p class="text-xs">cart { cartItems.length }</p>
         </Link>
 
         <Link
