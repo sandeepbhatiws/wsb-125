@@ -1,12 +1,14 @@
 const express = require('express');
 const server =  express() // To Create executable
 const apiData = require('./apiData/apiData.js');
+const validation = require('./apiData/middleware.js');
 
 server.get('/',(request,response) => {
     response.send('Server is working fine !!');
 })
 
-server.post('/categories',(request,response) => {
+server.get('/categories',validation,(request,response) => {
+
     if(apiData.categories.length > 0){
         var data = {
             status : true,
