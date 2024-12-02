@@ -3,6 +3,12 @@ const server = express();   // Executable Function
 const dbConnection = require('./dbConnection.js');
 const mongodb = require('mongodb');
 
+// parse requests of content-type - application/json
+server.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+server.use(express.urlencoded({ extended: true }));
+
 server.get('/', (request, response) => {
     response.send('Server is working Fine');
 })
@@ -80,6 +86,123 @@ server.get('/api/admin/categories/details', async(request, response) => {
         }
         response.send(result);
     }
+})
+
+server.post('/api/admin/brands/add', async(request, response) => {
+
+    const database = await dbConnection();
+    const collection = database.collection('brands');
+
+    var data = {
+        name : request.body.name,
+        image : request.body.image
+    }
+
+    var data = await collection.insertOne(data);
+
+    console.log(request.body);
+
+    const result = {
+        status : true,
+        message : 'Brand add Successfulyy !!',
+        data : ''
+    }
+
+    response.send(result);
+
+})
+
+server.post('/api/admin/brands/view', async(request, response) => {
+
+    const database = await dbConnection();
+    const collection = database.collection('brands');
+
+    var data = await collection.find().toArray();
+
+    if(data.length != 0){
+        const result = {
+            status : true,
+            message : 'Brands found Successfulyy !!',
+            data : data
+        }
+        response.send(result);
+    } else {
+        const result = {
+            status : false,
+            message : 'no brands found !!',
+            data : []
+        }
+        response.send(result);
+    }
+})
+
+server.post('/api/admin/brands/update', async(request, response) => {
+
+    const database = await dbConnection();
+    const collection = database.collection('brands');
+
+    var data = {
+        name : request.body.name,
+        image : request.body.image
+    }
+
+    try {
+        var id = new mongodb.ObjectId(request.body.id);
+
+        var data = await collection.updateOne({_id : id},{ $set: data });
+
+        console.log(request.body);
+
+        const result = {
+            status : true,
+            message : 'Brand update Successfulyy !!',
+            data : ''
+        }
+
+        response.send(result);
+    } catch (error) {
+        const result = {
+            status : false,
+            message : 'Something went wrong !!',
+            data : ''
+        }
+
+        response.send(result);
+    }
+    
+
+})
+
+server.post('/api/admin/brands/delete', async(request, response) => {
+
+    const database = await dbConnection();
+    const collection = database.collection('brands');
+
+    try {
+        var id = new mongodb.ObjectId(request.body.id);
+
+        var data = await collection.deleteOne({_id : id});
+
+        console.log(request.body);
+
+        const result = {
+            status : true,
+            message : 'Brand delete Successfulyy !!',
+            data : ''
+        }
+
+        response.send(result);
+    } catch (error) {
+        const result = {
+            status : false,
+            message : 'Something went wrong !!',
+            data : ''
+        }
+
+        response.send(result);
+    }
+    
+
 })
 
 server.listen('5000',() => {
