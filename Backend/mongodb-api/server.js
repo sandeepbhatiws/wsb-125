@@ -136,7 +136,7 @@ server.post('/api/admin/brands/view', async(request, response) => {
     }
 })
 
-server.post('/api/admin/brands/update', async(request, response) => {
+server.put('/api/admin/brands/update/:id', async(request, response) => {
 
     const database = await dbConnection();
     const collection = database.collection('brands');
@@ -147,7 +147,7 @@ server.post('/api/admin/brands/update', async(request, response) => {
     }
 
     try {
-        var id = new mongodb.ObjectId(request.body.id);
+        var id = new mongodb.ObjectId(request.params.id);
 
         var data = await collection.updateOne({_id : id},{ $set: data });
 
@@ -173,7 +173,7 @@ server.post('/api/admin/brands/update', async(request, response) => {
 
 })
 
-server.post('/api/admin/brands/delete', async(request, response) => {
+server.delete('/api/admin/brands/delete', async(request, response) => {
 
     const database = await dbConnection();
     const collection = database.collection('brands');
