@@ -17,50 +17,7 @@ server.get('/', (request, response) => {
     response.send('Server is working fine !!');
 });
 
-server.post('/category/add',async (request, response) => {
-
-    const categorySchema = new mongoose.Schema({
-        name : String,
-        image : String,
-        status : Boolean,
-        order : Number,
-    });
-
-    const categoryModal = mongoose.model('category',categorySchema);
-    
-
-    const data = new categoryModal({
-        name : request.body.category_name,
-        image : request.body.category_image,
-        status : request.body.category_status,
-        order : request.body.category_order,
-    })
-
-    await data.find()
-    .then((result) => {
-        const resp = {
-            status : true,
-            message : 'Record inserted successfully !!',
-            data : result,
-        }
-        response.send(resp);
-    })
-    .catch((error) => {
-        const resp = {
-            status : false,
-            message : 'Something went wrong !!',
-            data : '',
-            error : error
-        }
-        response.send(resp);
-    })
-
-
-    
-
-})
-
-
+require('./app/Routes/Admin/categoryRoutes.js')(server);
 
 mongoose.connect('mongodb://127.0.0.1:27017/ecommerce_new')
 .then(() => {
