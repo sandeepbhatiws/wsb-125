@@ -3,11 +3,15 @@ const mongoose = require('mongoose');
 const categorySchema = new mongoose.Schema({
     name : {
         type : String,
-        required : [true, 'This field is required.'],
+        // minLength : [5, 'Charater value must be greather that 5'],
+        // maxlength : 15,
+        // enum : ['men','women'],
+        match: /^[a-z 'A-Z]{2,20}$/,
+        required : [true, 'Name is required.'],
     },
     image : {
         type : String,
-        required : [true, 'This field is required.'],
+        required : [true, 'Image is required.'],
     },
     status : {
         type : Boolean,

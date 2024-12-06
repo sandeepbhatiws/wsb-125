@@ -1,5 +1,5 @@
 const express = require('express');
-const { create, index, update, destroy } = require('../../Controllers/Admin/categoryController');
+const { create, index, update, destroy, details } = require('../../Controllers/Admin/categoryController');
 
 const router = express.Router();
 
@@ -9,9 +9,11 @@ module.exports = server => {
 
     router.post('/view',index);
 
-    router.put('/update',update);
+    router.post('/details/:id',details);
 
-    router.delete('/delete',destroy);
+    router.put('/update/:id',update);
+
+    router.delete('/delete/:id',destroy);
 
     server.use('/api/admin/categories',router);
 }
