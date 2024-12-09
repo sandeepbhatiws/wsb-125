@@ -39,10 +39,52 @@ exports.create = async(request,response) => {
 // For View 
 exports.index = async(request,response) => {
 
-    await categoryModal.find({ deleted_at : null })
-    .then((result) => {
+    // await categoryModal.find({ deleted_at : null })
+    // await categoryModal.find({ deleted_at : null, status : true })
+    // await categoryModal.findOne({ _id : request.body.id, deleted_at : null, status : true })
+    // await categoryModal.findById(request.body.id)
 
-        // console.log(result.length);
+
+
+    // await categoryModal.find({ deleted_at : null, status : true }).select('name image')
+
+    console.log(request.body.limit);
+
+    if(request.body.page == undefined || request.body.page < 1){
+        var page = 1;
+    } else {
+        var page = request.body.page;
+    }
+
+    if(request.body.limit == undefined){
+        var limit = 6;
+    } else {
+        var limit = request.body.limit;
+    }
+
+    var skip = (page - 1) * limit;
+
+    // await categoryModal.find({ deleted_at : null, status : true })
+    // .select('name image')
+    // .limit(limit).skip(skip)
+
+    // var nameRegex = new RegExp("^" + request.body.name);
+
+    var nameRegex = new RegExp(request.body.name,"i");
+
+    await categoryModal.find(
+        { 
+            deleted_at : null, 
+            status : true, 
+            name : nameRegex,
+            // order : { 
+            //     $lt : 0
+            // } 
+        })
+        .sort({ order: 'asc', _id : 'desc'})
+    .select('name image status order')
+
+    .then((result) => {
         if(result.length > 0){
             const resp = {
                 status : true,
