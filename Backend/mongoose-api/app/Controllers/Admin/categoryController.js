@@ -2,9 +2,12 @@ const categoryModal = require("../../Models/Category.js");
 
 // For Add Data
 exports.create = async(request,response) => {
+
+    console.log(request.file);
+
     const data = new categoryModal({
         name : request.body.category_name,
-        image : request.body.category_image,
+        // image : request.body.category_image,
         status : request.body.category_status,
         order : request.body.category_order,
     })
@@ -22,7 +25,6 @@ exports.create = async(request,response) => {
         var errormessages = [];
 
         for(var value in error.errors){
-            console.log(value);
             errormessages.push(error.errors[value].message);
         }
 
