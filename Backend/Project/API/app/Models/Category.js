@@ -14,8 +14,9 @@ const categorySchema = new mongoose.Schema({
         type : String,
     },
     featured_categories : {
+        type : String,
         enum : ['Yes','No'],
-        default : 'No'
+        default : `No`
     },
     status : {
         type : Boolean,
