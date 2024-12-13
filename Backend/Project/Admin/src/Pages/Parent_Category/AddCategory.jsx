@@ -1,13 +1,37 @@
 import React from "react";
 import Breadcrumb from "../../common/Breadcrumb";
+import axios, { toFormData } from "axios";
+import { toast } from "react-toastify";
 
 export default function AddCategory() {
 
     const formHandler = (event) => {
         event.preventDefault();        
 
-        var formData = new FormData(event.target);
-        console.log(formData.get('name'));
+        
+        // console.log(formData.get('name'));
+
+        // var data = {
+        //     category_name : event.target.name.value
+        // }
+
+        // var formData = new FormData(event.target);
+        // var data = {
+        //     category_name : formData.get('name')
+        // }
+
+
+        axios.post('http://localhost:5000/api/admin/categories/add',event.target)
+        .then((success) => {
+            if(success.data.status == true){
+                event.target.reset();
+                toast.success(success.data.message);
+            } else {
+                toast.error(success.data.message);
+            }
+        }).catch((error) => {
+            toast.error('Something went wrong !!');
+        })
     }
 
     return (
