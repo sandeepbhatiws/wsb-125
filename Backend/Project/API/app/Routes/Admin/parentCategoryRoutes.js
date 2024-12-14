@@ -28,6 +28,8 @@ module.exports = server => {
 
     router.post('/',upload,index);
 
+    router.post('/details/:id',upload,details);
+
     router.put('/update/:id',upload,update);
 
     router.delete('/delete/:id',upload,destroy);

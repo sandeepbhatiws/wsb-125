@@ -82,6 +82,39 @@ exports.index = async(request,response) => {
     })
 }
 
+// For Details 
+exports.details = async(request,response) => {
+
+    await categoryModal
+    .findOne({ deleted_at : null, _id : request.params.id})
+    .then((result) => {
+        if(result != undefined){
+            const resp = {
+                status : true,
+                message : 'Record found successfully !!',
+                data : result,
+            }
+            response.send(resp);
+        } else {
+            const resp = {
+                status : false,
+                message : 'No record found !!',
+                data : [],
+            }
+            response.send(resp);
+        }
+    })
+    .catch((error) => {
+        const resp = {
+            status : false,
+            message : 'Something went wrong !!',
+            data : '',
+            error : error
+        }
+        response.send(resp);
+    })
+}
+
 // For Update
 exports.update = async(request,response) => {
 
