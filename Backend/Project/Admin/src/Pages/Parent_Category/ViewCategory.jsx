@@ -6,6 +6,39 @@ import { Link } from 'react-router-dom';
 export default function ViewCategory() {
 
   const [categories, setCategories] = useState([]);
+  const [checkBoxValue, setCheckBoxvalue] = useState([]);
+
+
+  const selectHandler = (id) => {
+    if(checkBoxValue.includes(id)){
+      const data  = checkBoxValue.filter((v,i) => {
+        if(v != id){
+          return v;
+        }
+      })
+      setCheckBoxvalue([...data]);
+    } else {
+      setCheckBoxvalue([...checkBoxValue, id]);
+    }
+    
+  }
+
+  const allCheckBoxSelect = () => {
+
+    if(checkBoxValue.length != categories.length){
+      const data = [];
+      categories.forEach((v) => {
+        data.push(v._id);
+      })
+      setCheckBoxvalue([...data]);
+    } else {
+      setCheckBoxvalue([]);
+    }
+  }
+
+  const deleteAll = () => {
+      console.log(checkBoxValue);
+  }
 
   useEffect(() => {
     axios.post('http://localhost:5000/api/admin/categories')
@@ -24,6 +57,21 @@ export default function ViewCategory() {
     <section className="w-full">
       <Breadcrumb path={"Parent Category"} path2={"View Category"} slash={"/"} />
       <div className="w-full min-h-[610px]">
+      <div className="max-w-[1220px] mx-auto py-5">
+        <button onClick={deleteAll}
+            type="button"
+            className="focus:outline-none my-10 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+        >
+            Delete
+        </button>
+
+        <button
+            type="button"
+            className="ms-3 focus:outline-none my-10 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+        >
+            Change Status
+        </button>
+      </div>
         <div className="max-w-[1220px] mx-auto py-5">
           <h3 className="text-[26px] font-semibold bg-slate-100 py-3 px-4 rounded-t-md border border-slate-400">
             View Category
@@ -34,6 +82,10 @@ export default function ViewCategory() {
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 ">
                   <tr>
                     <th scope="col" className="px-6 py-3" width="100px">
+                      <input name='deleteCheck' id="purple-checkbox" type="checkbox" value="" className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 " 
+                      onChange={ allCheckBoxSelect }
+                      checked = { (checkBoxValue.length == categories.length ) ? true : '' }
+                      />
                       Select All
                     </th>
                     <th scope="col" className="px-6 py-3" width="100px">
@@ -61,7 +113,9 @@ export default function ViewCategory() {
                         return(
                           <tr className="bg-white border-b">
                             <th scope="row" className="px-6 py-4 text-[18px] font-semibold text-gray-900 whitespace-nowrap ">
-                              <input name='deleteCheck' id="purple-checkbox" type="checkbox" value="" className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 " />
+                              <input name='deleteCheck' id="purple-checkbox" onClick={ () => selectHandler(v._id) } type="checkbox" value="" className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 "
+                              checked = { ( checkBoxValue.includes(v._id)) ? true : '' }
+                              />
                             </th>
                             <td className="px-6 py-4">
                               {i+1}
@@ -92,7 +146,6 @@ export default function ViewCategory() {
                       </td>
                     </tr>
                   }
-                  
                   
                 </tbody>
               </table>
