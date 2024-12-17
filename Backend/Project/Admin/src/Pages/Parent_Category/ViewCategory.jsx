@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumb from '../../common/Breadcrumb'
-import axios from 'axios';
+import axios, { toFormData } from 'axios';
 import { Link } from 'react-router-dom';
+
+import { Pagination } from "flowbite-react";
+import { toast } from 'react-toastify';
 
 export default function ViewCategory() {
 
   const [categories, setCategories] = useState([]);
   const [checkBoxValue, setCheckBoxvalue] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [status, setStatus] = useState(1);
+  const onPageChange = (page) => setCurrentPage(page);
 
 
   const selectHandler = (id) => {
@@ -37,11 +44,49 @@ export default function ViewCategory() {
   }
 
   const deleteAll = () => {
-      console.log(checkBoxValue);
+
+    console.log(checkBoxValue);
+    if(confirm('Are you sure you want to delete ?')){
+        axios.post('http://localhost:5000/api/admin/categories/delete', toFormData({
+          id : checkBoxValue
+        }))
+        .then((success) => {
+          if(success.data.status == true){
+            setStatus(!status);
+            setCheckBoxvalue([]);
+            toast.success(success.data.message);
+          } else {
+            toast.error(success.data.message);
+          }
+        }).catch((error) => {
+            toast.error('Something went wrong !!');
+        })
+    }
+  }
+
+  const changeStatus = () => {
+
+        axios.post('http://localhost:5000/api/admin/categories/change-status', toFormData({
+          id : checkBoxValue
+        }))
+        .then((success) => {
+          if(success.data.status == true){
+            setStatus(!status);
+            setCheckBoxvalue([]);
+            toast.success(success.data.message);
+          } else {
+            toast.error(success.data.message);
+          }
+        }).catch((error) => {
+            toast.error('Something went wrong !!');
+        })
   }
 
   useEffect(() => {
-    axios.post('http://localhost:5000/api/admin/categories')
+    axios.post('http://localhost:5000/api/admin/categories',{
+      page : currentPage,
+      limit : 20,
+    })
       .then((success) => {
         if(success.data.status == true){
           setCategories(success.data.data)
@@ -51,7 +96,7 @@ export default function ViewCategory() {
       }).catch((error) => {
           toast.error('Something went wrong !!');
       })
-  },[]);
+  },[currentPage,status]);
 
   return (
     <section className="w-full">
@@ -65,7 +110,7 @@ export default function ViewCategory() {
             Delete
         </button>
 
-        <button
+        <button onClick={changeStatus}
             type="button"
             className="ms-3 focus:outline-none my-10 text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
         >
@@ -151,6 +196,11 @@ export default function ViewCategory() {
               </table>
             </div>
 
+            
+
+          </div>
+          <div className="flex overflow-x-auto sm:justify-center m-4">
+            <Pagination currentPage={currentPage} totalPages={100} onPageChange={onPageChange} showIcons />
           </div>
         </div>
       </div>

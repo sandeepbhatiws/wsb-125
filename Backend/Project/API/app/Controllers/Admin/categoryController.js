@@ -157,9 +157,11 @@ exports.update = async(request,response) => {
 
 // For Delete
 exports.destroy = async(request,response) => {
-    await categoryModal.updateOne(
+    await categoryModal.updateMany(
         {
-            _id : request.params.id
+            _id : {
+                $in : request.body.id
+            }
         },
         {
             $set : {
@@ -170,6 +172,54 @@ exports.destroy = async(request,response) => {
         var resp = {
             status : true,
             message : 'Record deleted successfully !!',
+            data : result
+        }
+
+        response.send(resp);
+
+    }).catch((error) => {
+        var errormessages = [];
+
+        for(var value in error.errors){
+            console.log(value);
+            errormessages.push(error.errors[value].message);
+        }
+
+        const resp = {
+            status : false,
+            message : 'Something went wrong !!',
+            data : '',
+            error : errormessages
+        }
+        response.send(resp);
+    })
+}
+
+// For Change Status
+exports.changeStatus = async(request,response) => {
+    await categoryModal.updateMany(
+        {
+            _id : {
+                $in : request.body.id
+            }
+        },
+        { 
+            $set: { 
+                status: { 
+                    $switch: {
+                        branches: [
+                            { case: { $eq: [ "$status", 0 ] }, then: 1 },
+                            { case: { $eq: [ "$status", 1 ] }, then: 0 },
+                        ],
+                        default: 1
+                    } 
+                } 
+            }
+        }
+    ).then((result) =>{
+        var resp = {
+            status : true,
+            message : 'Status update successfully !!',
             data : result
         }
 
