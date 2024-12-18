@@ -2,9 +2,13 @@ const categoryModal = require("../../Models/Category.js");
 
 // For Add Data
 exports.create = async(request,response) => {
+
     const data = new categoryModal({
         name : request.body.name,
         order : request.body.order ? request.body.order : 0,
+        root_id : request.body.parent_id,
+        featured_categories : request.body.featured_categories,
+        image : request.file.filename
     })
 
     await data.save()
@@ -51,7 +55,7 @@ exports.index = async(request,response) => {
 
     var condition = {
         deleted_at : null, 
-        root_id : 0,
+        root_id : { $ne : 0 },
     }
 
     if(request.body.status == undefined){
@@ -61,7 +65,7 @@ exports.index = async(request,response) => {
 
     await categoryModal
     .find(condition)
-    .select('name status order')
+    .select('name image root_id featured_categories status order')
     .limit(limit).skip(skip)
     .sort({ _id : 'desc'})
     .then((result) => {
@@ -127,7 +131,7 @@ exports.details = async(request,response) => {
 
 // For Update
 exports.update = async(request,response) => {
-
+    
     await categoryModal.updateOne(
         {
             _id : request.params.id
@@ -136,6 +140,9 @@ exports.update = async(request,response) => {
             $set : {
                 name : request.body.name,
                 order : request.body.order,
+                root_id : request.body.parent_id,
+                featured_categories : request.body.featured_categories,
+                image : request.file.filename
             }
         }
     ).then((result) =>{

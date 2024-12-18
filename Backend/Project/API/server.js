@@ -18,6 +18,7 @@ server.get('/', (request, response) => {
 });
 
 require('./app/Routes/Admin/parentCategoryRoutes.js')(server);
+require('./app/Routes/Admin/subCategoryRoutes.js')(server);
 
 mongoose.connect('mongodb://127.0.0.1:27017/frank_and_oak')
 .then(() => {
