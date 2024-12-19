@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Breadcrumb from '../../common/Breadcrumb'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function ViewSubCategory() {
+    const [subCategories, setSubCategories] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [status, setStatus] = useState(1);
+
+    useEffect(() => {
+        axios.post('http://localhost:5000/api/admin/sub-categories',{
+          page : currentPage,
+        })
+          .then((success) => {
+            if(success.data.status == true){
+              setSubCategories(success.data.data)
+            } else {
+                setSubCategories([]);
+            }
+          }).catch((error) => {
+              toast.error('Something went wrong !!');
+          })
+      },[currentPage,status]);
+
   return (
     <section className="w-full">
         <Breadcrumb path={"Sub Category"} path2={"View Sub Category"} slash={"/"} />
@@ -17,31 +38,42 @@ export default function ViewSubCategory() {
     <table className="w-full  text-left rtl:text-right text-gray-500 ">
         <thead className="text-sm text-gray-700 uppercase bg-gray-50 ">
             <tr>
-                <th scope="col" className="px-6 py-3">
-                    Delete
+                <th scope="col" className="px-6 py-3" width="100px">
+                    Select All
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" width="100px">
                     S. No.
                 </th>
                 <th scope="col" className="px-6 py-3">
-                    Category Name 
+                    Parent Category Name 
+                </th>
+                <th scope="col" className="px-6 py-3">
+                    Name 
+                </th>
+                <th scope="col" className="px-6 py-3" width="100px">
+                    Featured Category
                 </th>
                 <th scope="col" className="px-6 py-3">
                     Image 
                 </th>
-                <th scope="col" className="px-6 py-3">
-                    Description 
+                <th scope="col" className="px-6 py-3" width="100px">
+                    Order
                 </th>
-                <th scope="col" className="px-6 py-3">
-                    Action
-                </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" width="100px">
                     Status
                 </th>
+                <th scope="col" className="px-6 py-3" width="100px">
+                    Action
+                </th>
+                
             </tr>
         </thead>
         <tbody>
-            <tr className="bg-white border-b">
+
+            {
+                (subCategories.length > 0)
+                ? 
+                <tr className="bg-white border-b">
                 <th scope="row" className="px-6 py-4 text-[18px] font-semibold text-gray-900 whitespace-nowrap ">
                 <input name='deleteCheck' id="purple-checkbox" type="checkbox" value="" className="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 "/>
                 </th>
@@ -67,6 +99,14 @@ export default function ViewSubCategory() {
                     Active
                 </td>
             </tr>
+                :
+                <tr className="bg-white border-b">
+                    <td className="px-6 py-4 text-center" colSpan={9}>
+                        No Record Found !!
+                    </td>
+                </tr>
+            }
+
         </tbody>
     </table>
 </div>

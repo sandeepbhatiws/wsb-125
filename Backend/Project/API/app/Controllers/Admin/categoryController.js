@@ -59,6 +59,8 @@ exports.index = async(request,response) => {
         condition.status = request.body.status;
     }
 
+    console.log(condition);
+
     await categoryModal
     .find(condition)
     .select('name status order')
@@ -207,25 +209,25 @@ exports.destroy = async(request,response) => {
 
 // For Change Status
 exports.changeStatus = async(request,response) => {
+
     await categoryModal.updateMany(
         {
-            _id : {
-                $in : request.body.id
-            }
+          _id: { $in: request.body.id },
         },
-        { 
-            $set: { 
-                status: { 
-                    $switch: {
-                        branches: [
-                            { case: { $eq: [ "$status", 0 ] }, then: 1 },
-                            { case: { $eq: [ "$status", 1 ] }, then: 0 },
-                        ],
-                        default: 1
-                    } 
-                } 
-            }
-        }
+        [
+          {
+            $set: {
+              status: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ["$status", 0] }, then: 1 },
+                    { case: { $eq: ["$status", 1] }, then: 0 },
+                  ],
+                },
+              },
+            },
+          },
+        ]
     ).then((result) =>{
         var resp = {
             status : true,

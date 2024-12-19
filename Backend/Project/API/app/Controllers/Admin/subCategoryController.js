@@ -3,13 +3,18 @@ const categoryModal = require("../../Models/Category.js");
 // For Add Data
 exports.create = async(request,response) => {
 
-    const data = new categoryModal({
+    var formData = {
         name : request.body.name,
         order : request.body.order ? request.body.order : 0,
         root_id : request.body.parent_id,
         featured_categories : request.body.featured_categories,
-        image : request.file.filename
-    })
+    };
+
+    if(request.file.filename != undefined){
+        formData.image = request.file.filename;
+    }
+
+    const data = new categoryModal(formData)
 
     await data.save()
     .then((result) => {
@@ -132,18 +137,23 @@ exports.details = async(request,response) => {
 // For Update
 exports.update = async(request,response) => {
     
+    var formData = {
+        name : request.body.name,
+        order : request.body.order,
+        root_id : request.body.parent_id,
+        featured_categories : request.body.featured_categories,
+    }
+
+    if(request.file.filename != undefined){
+        formData.image = request.file.filename;
+    }
+
     await categoryModal.updateOne(
         {
             _id : request.params.id
         },
         {
-            $set : {
-                name : request.body.name,
-                order : request.body.order,
-                root_id : request.body.parent_id,
-                featured_categories : request.body.featured_categories,
-                image : request.file.filename
-            }
+            $set : formData
         }
     ).then((result) =>{
         var resp = {
@@ -220,19 +230,20 @@ exports.changeStatus = async(request,response) => {
                 $in : request.body.id
             }
         },
-        { 
-            $set: { 
-                status: { 
-                    $switch: {
-                        branches: [
-                            { case: { $eq: [ "$status", 0 ] }, then: 1 },
-                            { case: { $eq: [ "$status", 1 ] }, then: 0 },
-                        ],
-                        default: 1
+        [
+            { 
+                $set: { 
+                    status: { 
+                        $switch: {
+                            branches: [
+                                { case: { $eq: [ "$status", 0 ] }, then: 1 },
+                                { case: { $eq: [ "$status", 1 ] }, then: 0 },
+                            ],
+                        } 
                     } 
-                } 
+                }
             }
-        }
+        ]
     ).then((result) =>{
         var resp = {
             status : true,

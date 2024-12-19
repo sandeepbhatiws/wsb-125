@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     }
 })
   
-const upload = multer({ storage: storage }).none();
+const upload = folder.none();
 
 module.exports = server => {
 
