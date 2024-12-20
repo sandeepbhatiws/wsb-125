@@ -6,9 +6,9 @@ import axios from "axios";
 
 export default function AddSubCategory() {
 
-  const [categories, setCategories] = useState([]);
-
   const params = useParams();
+  const [categories, setCategories] = useState([]);
+  var [subCategoryDetails, setSubCategoryDetails] = useState('');
 
   useEffect(() => {
     axios.post('http://localhost:5000/api/admin/categories',{
@@ -26,6 +26,22 @@ export default function AddSubCategory() {
           toast.error('Something went wrong !!');
       })
   },[]);
+
+  useEffect(() => {
+
+    if(params.id != null){
+        axios.post(`http://localhost:5000/api/admin/sub-categories/details/${params.id}`)
+        .then((result) => {
+            if(result.data.status == true){
+                setSubCategoryDetails(result.data.data)
+            }
+        })
+        .catch((error) => {
+            toast.error('Something went wrong !!');
+        })
+    }
+    
+},[]);
 
   const formHandler = (event) => {
     event.preventDefault();
@@ -72,7 +88,7 @@ export default function AddSubCategory() {
               </h3>
               <form onSubmit={ formHandler } autoComplete="off" className="border border-t-0 p-3 rounded-b-md border-slate-400">
 
-                <input type="hidden" value='' name="_id"/>
+                <input type="hidden" value={subCategoryDetails._id} name="_id"/>
                 <div className="mb-5">
                   <label
                     for="base-input"
@@ -91,7 +107,15 @@ export default function AddSubCategory() {
                     {
                       categories.map((v,i) => {
                         return(
-                          <option value={v._id}>{v.name}</option>
+                          <option value={v._id} 
+                            selected ={ 
+                              subCategoryDetails.root_id == v._id
+                              ?
+                              'selected'
+                              :
+                              ''
+                            }  
+                          >{v.name}</option>
                         )
                       })
                     }
@@ -107,6 +131,7 @@ export default function AddSubCategory() {
                   <input
                     type="text"
                     name="name"
+                    defaultValue={ subCategoryDetails.name }
                     id="base-input"
                     className="text-[19px] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3 "
                     placeholder="Enter Name"
@@ -126,8 +151,20 @@ export default function AddSubCategory() {
                     className=" border-2 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
                   >
                     <option value=''>Select Featured Category</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option value="Yes" selected ={ 
+                              subCategoryDetails.featured_categories == 'Yes'
+                              ?
+                              'selected'
+                              :
+                              ''
+                            } >Yes</option>
+                    <option value="No" selected ={ 
+                              subCategoryDetails.root_id == 'No'
+                              ?
+                              'selected'
+                              :
+                              ''
+                            } >No</option>
                   </select>
                 </div>
                 <div className="mb-5">
@@ -163,8 +200,8 @@ export default function AddSubCategory() {
                     <input
                         type="number"
                         min={1}
+                        defaultValue={subCategoryDetails.order}
                         name="order"
-                        defaultValue=''
                         id="base-input"
                         className="text-[19px] border-2 shadow-sm border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 px-3 "
                         placeholder="Order"

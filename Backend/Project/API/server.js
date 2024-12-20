@@ -17,6 +17,8 @@ server.get('/', (request, response) => {
     response.send('Server is working fine !!');
 });
 
+server.use('/uploads/categories',express.static('uploads/categories'));
+
 require('./app/Routes/Admin/parentCategoryRoutes.js')(server);
 require('./app/Routes/Admin/subCategoryRoutes.js')(server);
 

@@ -77,6 +77,7 @@ exports.index = async(request,response) => {
         if(result.length > 0){
             const resp = {
                 status : true,
+                base_url : `${request.protocol}://${request.get('host')}/uploads/categories/`,
                 message : 'Record found successfully !!',
                 data : result,
             }
@@ -137,6 +138,8 @@ exports.details = async(request,response) => {
 // For Update
 exports.update = async(request,response) => {
     
+    console.log(request.file);
+
     var formData = {
         name : request.body.name,
         order : request.body.order,
@@ -144,7 +147,7 @@ exports.update = async(request,response) => {
         featured_categories : request.body.featured_categories,
     }
 
-    if(request.file.filename != undefined){
+    if(request.file != undefined){
         formData.image = request.file.filename;
     }
 
