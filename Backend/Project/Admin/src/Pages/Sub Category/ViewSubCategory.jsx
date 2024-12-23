@@ -86,7 +86,7 @@ export default function ViewSubCategory() {
                                 { i+1 }
                             </td>
                             <td className="px-6 py-4">
-                                { v.root_id }
+                                { v.root_id.name }
                             </td>
                             <td className="px-6 py-4">
                                 { v.name }

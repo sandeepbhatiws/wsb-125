@@ -26,6 +26,8 @@ module.exports = server => {
 
     router.post('/',folder.none(),index);
 
+    router.post('/v1',folder.none(),index);
+
     router.post('/details/:id',upload,details);
 
     router.put('/update/:id',single,update);

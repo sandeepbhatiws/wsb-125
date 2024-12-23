@@ -8,6 +8,7 @@ const categorySchema = new mongoose.Schema({
     },
     root_id : {
         type : String,
+        ref : 'Category',
         default : 0
     },
     image : {
@@ -40,6 +41,6 @@ const categorySchema = new mongoose.Schema({
     },
 });
 
-const categoryModal = mongoose.model('category',categorySchema);
+const categoryModal = mongoose.model('Category',categorySchema);
 
 module.exports = categoryModal;

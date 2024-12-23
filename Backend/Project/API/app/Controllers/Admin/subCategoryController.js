@@ -71,6 +71,11 @@ exports.index = async(request,response) => {
     await categoryModal
     .find(condition)
     .select('name image root_id featured_categories status order')
+    // .populate('root_id')
+    .populate({
+        path : 'root_id',
+        select : 'name'
+    })
     .limit(limit).skip(skip)
     .sort({ _id : 'desc'})
     .then((result) => {
