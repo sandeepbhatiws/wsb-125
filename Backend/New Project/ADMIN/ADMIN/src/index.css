@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.colour >svg:first-child{
+  width: 15px;
+}
