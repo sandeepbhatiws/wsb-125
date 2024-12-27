@@ -1,10 +1,40 @@
-let express = require('express');
-const { insert, index } = require('../../Controller/ADmin/productsController.js');
-let router = express.Router();
-let multer = require('multer')
-const upload = multer({dest:'uploads/products'})
-module.exports=app=>{
-    router.post('/add',upload.single('product_image'),insert)
-    router.post('/view',index)
+const express = require('express');
+
+const router =express.Router();
+const path = require('path')
+const multer = require('multer');
+const { insert, index, update, destroy, details, changeStatus } = require('../../Controller/ADmin/ProductController.js');
+const uploads = multer({ dest: 'uploads/products' })
+
+const storage = multer.diskStorage({
+    destination:function (req,file,cb){
+        cb(null,'uploads/products')
+    },
+    filename:function(req,file,cb){
+        const uniquevalue = Date.now()+ '-'+ Math.round(Math.random()*1E9)
+        var imgpath= path.extname(file.originalname);
+        cb(null,file.fieldname+'-'+ uniquevalue+imgpath)
+    }
+})
+
+const single = multer({storage:storage}).single('image')
+const multiple = multer({storage:storage}).array('images')
+const upload = multer({storage:storage}).fields([{ name: 'image', maxCount: 1 }, { name: 'images', maxCount: 8 }])
+const none = multer({storage:storage}).none()
+
+module.exports= app=>{
+
+    router.post('/add',upload,insert)
+    
+    router.post('/',none,index)
+    
+    router.put('/update/:id',upload,update)
+
+    router.post('/delete',none,destroy)
+
+    router.post('/change-status',none,changeStatus)
+
+    router.post('/detail/:id',none,details)
+
     app.use('/api/admin/products',router)
 }

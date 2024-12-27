@@ -5,13 +5,13 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'name is required']
     },
-    price: {
-        type: Double,
+    actual_price: {
+        type: Number,
         default:0,
         required: [true, "price is required"]
     },
-    sell_price: {
-        type: Double,
+    sale_price: {
+        type: Number,
         default:0,
         required: [true, "price is required"]
     },
@@ -39,15 +39,15 @@ const productSchema = new mongoose.Schema({
         // required: [true, "thumbnail is required"]
     },
     description: {
-        type: Text,
+        type: String,
         default:''
     },
     short_description:{
-        type:Text,
+        type:String,
         default:''
     },
     shipping_charges:{
-        type:Double,
+        type:Number,
         default:0
     },
     order: {
