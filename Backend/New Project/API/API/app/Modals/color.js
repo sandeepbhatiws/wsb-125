@@ -25,5 +25,5 @@ let colorSchema = new mongoose.Schema({
     }
 
 }, { timestamps: true })
-let colorModal = mongoose.model('colors', colorSchema);
+let colorModal = mongoose.model('Colors', colorSchema);
 module.exports = colorModal

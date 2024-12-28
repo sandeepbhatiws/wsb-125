@@ -1,12 +1,17 @@
+const productImageModel = require("../../Modals/productImages.js");
 const productModel = require("../../Modals/products.js")
 
 exports.insert = async (request, response) => {
 
     var requestData = request.body;
 
-    if (request.files.image) {
-        requestData.image = request.files.image[0].filename
-    }
+    console.log(request.files);
+
+    // if (request.files[0]) {
+    //     if (request.files[0].filename) {
+    //         requestData.image = request.files[0].filename
+    //     }
+    // }
 
     // if (request.files.images) {
     //     requestData.images = []
@@ -18,6 +23,16 @@ exports.insert = async (request, response) => {
     const data = new productModel(requestData)
     await data.save()
     .then((result) => {
+
+        // if (request.files) {
+        //     request.files.forEach(element => {
+        //         const images = new productImageModel({
+        //             product_id: result._id,
+        //             image: element.filename
+        //         });
+        //     })
+        // }
+
         let res = {
             status: true,
             message: 'Record insert successfully',
@@ -84,6 +99,10 @@ exports.index = async (request, response) => {
 
     await productModel.find(condition)
         .select('name category_id sub_category_id color_id size_id actual_price sale_price status order')
+        .populate('category_id', 'name')
+        .populate('sub_category_id', 'name')
+        .populate('color_id', 'name')  
+        .populate('size_id', 'name')
         .limit(limit).skip(skip)
         .sort({ _id: 'desc' })
         .then((result) => {

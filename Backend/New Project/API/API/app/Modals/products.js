@@ -1,5 +1,9 @@
 // const { text } = require('body-parser');
 const mongoose = require('mongoose');
+const Category = require('./category');
+const Colors = require('./color');
+const Sizes = require('./Size');
+
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -22,16 +26,20 @@ const productSchema = new mongoose.Schema({
     },
     category_id: {
         type: String,
+        ref : 'Category',
         required: [true, 'category is required']
     },
     sub_category_id: {
         type: String,
+        ref : 'Category',
     },
     color_id: {
         type: String,
+        ref : 'Colors',
     },
     size_id: {
         type: String,
+        ref: 'Sizes',
         required: [true, 'size is required']
     },
     image: {
