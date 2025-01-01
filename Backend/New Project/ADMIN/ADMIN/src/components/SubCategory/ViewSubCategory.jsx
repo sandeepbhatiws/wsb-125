@@ -35,13 +35,11 @@ export default function ViewSubCategory() {
         let data = checkedvalue.filter((v, i) => {
           if (v != event.target.id) {
             return v;
-
           }
         })
         setcheckedvalue(data)
       }
     }
-    console.log(checkedvalue)
   }
   let SelectAll = (event) => {
     if (event.target.checked == true) {
@@ -50,12 +48,12 @@ export default function ViewSubCategory() {
         data.push(v._id)
       })
       setcheckedvalue(data)
-      // console.log(data)
     } else {
       setcheckedvalue([])
     }
-    console.log(checkedvalue)
   }
+
+  
   let deleteall = () => {
     if (checkedvalue.length > 0) {
       if (confirm('are u sure to delete items')) {
@@ -74,9 +72,9 @@ export default function ViewSubCategory() {
           })
       }
     }
+}
 
-
-  }
+//for status change------------------------------------------------->>>>>>>>>>
   let changeStatus = () => {
     axios.post('http://localhost:5555/api/admin/sub-categories/change-status', toFormData({
       id: checkedvalue,

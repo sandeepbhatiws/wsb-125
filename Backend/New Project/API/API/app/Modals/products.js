@@ -42,6 +42,11 @@ const productSchema = new mongoose.Schema({
         ref: 'Sizes',
         required: [true, 'size is required']
     },
+    size_ids: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Sizes',
+        required: [true, 'size is required']
+    }],
     image: {
         type: String,
         // required: [true, "thumbnail is required"]

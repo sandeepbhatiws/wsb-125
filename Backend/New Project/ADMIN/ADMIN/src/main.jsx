@@ -24,6 +24,7 @@ import AddSubCategory from './components/SubCategory/AddSubCategory.jsx'
 import ViewSubCategory from './components/SubCategory/ViewSubCategory.jsx'
 import AddProduct from './components/products/AddProduct.jsx'
 import ViewProduct from './components/products/ViewProduct.jsx'
+import { ToastContainer } from 'react-toastify'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -68,6 +69,7 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <ToastContainer/>
     <RouterProvider router={router} />
     {/* <Dashboard/> */}
   </StrictMode>,

@@ -42,6 +42,9 @@ export default function ViewColor() {
                 alert('something went wrong ')
             })
     }, [render])
+
+
+    
     let deleteall = () => {
         if (confirm('are you sure you want to delete')) {
             axios.post('http://localhost:5555/api/admin/color/delete', {

@@ -98,13 +98,14 @@ exports.index = async (request, response) => {
     }
 
     await productModel.find(condition)
-        .select('name category_id sub_category_id color_id size_id actual_price sale_price status order')
-        .populate('category_id', 'name')
-        .populate('sub_category_id', 'name')
-        .populate('color_id', 'name')  
-        .populate('size_id', 'name')
-        .limit(limit).skip(skip)
-        .sort({ _id: 'desc' })
+        // .select('name category_id sub_category_id color_id size_id actual_price sale_price status order')
+        // .populate('category_id', 'name')
+        // .populate('sub_category_id', 'name')
+        // .populate('color_id', 'name')  
+        // .populate('size_id', 'name')
+        .populate('size_ids', 'name')
+        // .limit(limit).skip(skip)
+        // .sort({ _id: 'desc' })
         .then((result) => {
             if (result.length > 0) {
                 const resp = {

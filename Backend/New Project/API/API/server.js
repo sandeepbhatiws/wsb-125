@@ -20,6 +20,11 @@ require('./app/Routes/ADmin/subCategoryRoutes.js')(app)
 // require('./app/Routes/ADmin/brandsRoute.js')(app)
 require('./app/Routes/ADmin/productsRoute.js')(app)
 
+require('./app/Routes/ADmin/loginRoute.js')(app)
+
+// Website APIS
+require('./app/Routes/website/userRoute.js')(app)
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/FrankAndOaks')
   .then(() =>

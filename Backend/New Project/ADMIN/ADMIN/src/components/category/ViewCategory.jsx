@@ -2,12 +2,13 @@ import axios, { toFormData } from 'axios';
 import { Pagination } from "flowbite-react"
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function ViewCategory() {
     const [currentPage, setCurrentPage] = useState(1);
     const onPageChange = (page) => setCurrentPage(page);
     const [render,setrender]=useState(true)
-     // checboxvalue this state contain all ids ----------------------------------------->>>>>>
+     // checboxvalue this state contain all _ids ----------------------------------------->>>>>>
      let [checboxvalue, setcheckboxvalue] = useState([])
     
     const [Categories, SetCategories] = useState([])
@@ -19,6 +20,7 @@ export default function ViewCategory() {
             .then((response)=>{
                     if(response.data.status==true){
                         setcheckboxvalue([])
+                        toast.success("Record deleted successfully")
                         setrender(!render)
                     }else{  
                         alert('something went wrong')
