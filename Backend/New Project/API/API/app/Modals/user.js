@@ -6,17 +6,17 @@ let userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, 'name is required'],
+        required: [true, 'email is required'],
         unique: true
     },
     password: {
         type: String,
-        required: [true, 'name is required']
+        required: [true, 'password is required']
     },
     type: {
         type: String,
         enum : ['admin', 'user'],
-        required: [true, 'name is required']
+        required: [true, 'type is required']
     },
     status: {
         type: Boolean,
@@ -29,8 +29,6 @@ let userSchema = new mongoose.Schema({
     deleted_at: {
         type: Date,
         default: ''
-    },status:{
-        type:Boolean
     }
 
 }, { timestamps: true })
