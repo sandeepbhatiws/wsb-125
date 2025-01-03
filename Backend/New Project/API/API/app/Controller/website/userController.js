@@ -92,31 +92,27 @@ exports.login = async (request, response) => {
 }
 
 exports.viewProfile = async (request, response) => {
-
-    const token = request.headers.authorization.split(' ')[1];
-        // console.log(token);
-    var decoded = jwt.verify(token, secretvalue);
-        console.log(decoded);
-
-    // console.log(request.headers.authorization);
     
-    // try {
-    //     const token = request.headers.authorization.split(' ')[1];
-    //     console.log(token);
-    //     var decoded = jwt.verify(token, secretvalue);
-    //     console.log(decoded);
-    // } catch (error) {
-    //     console.log(error);
-    // }
-    
+    try {
+        const token = request.headers.authorization.split(' ')[1];
+        var decoded = jwt.verify(token, secretvalue);
+    } catch (error) {
+        const data = {
+            status: false,
+            message: 'Token is invalid',
+            tokenStatus : false,
+            data: error
+        }
+        response.send(data)
+    }
 
-    await userModal.findOne({ deleted_at: null, status: true })
+    await userModal.findOne({ _id: decoded.user._id, deleted_at: null })
     .then((result) => {
         if(result) {
             const resp = {
                 status: true,
-                message: 'record  found succesfully',
-                data: []
+                message: 'Record  Found Succesfully',
+                data: result
             }
             response.send(resp)
         }
@@ -139,36 +135,109 @@ exports.viewProfile = async (request, response) => {
     })
 }
 
-// exports.update = async (request, response) => {
-//     await defaultModal.updateOne({ _id: request.params.id }, {
-//         $set: {
-//             name: request.body.cate_name,
-            
-//         }
-//     })
-//         .then((result) => {
-//             let resp = {
-//                 status: true,
-//                 message: 'record update successfully',
-//                 data: result
-//             }
-//             response.send(resp)
-//         })
-//         .catch((error) => {
-//             var errormessage = []
+exports.updateProfile = async (request, response) => {
 
-//             for (var value in error.errors) {
-//                 console.log(value);
-//                 errormessage.push(error.errors[value].message)
-//             }
-//             let res = {
-//                 status: false,
-//                 message: 'something went wrong',
-//                 data: errormessage
-//             }
-//             response.send(res)
-//         })
-// }
+    try {
+        const token = request.headers.authorization.split(' ')[1];
+        var decoded = jwt.verify(token, secretvalue);
+
+        var data = request.body;
+
+        if(request.file){
+            data.image = request.file.filename;
+        }
+
+        await userModal.updateOne({ _id: decoded.user._id }, {
+            $set: data
+        })
+        .then((result) => {
+            let resp = {
+                status: true,
+                message: 'Profile update successfully',
+                data: result
+            }
+            response.send(resp)
+        })
+        .catch((error) => {
+            var errormessage = []
+            for (var value in error.errors) {
+                errormessage.push(error.errors[value].message)
+            }
+            let res = {
+                status: false,
+                message: 'something went wrong',
+                data: errormessage
+            }
+            response.send(res)
+        })
+    } catch (error) {
+        const data = {
+            status: false,
+            message: 'Token is invalid',
+            tokenStatus : false,
+            data: error
+        }
+        response.send(data)
+    }
+}
+
+exports.changePassword = async (request, response) => {
+
+    try {
+        const token = request.headers.authorization.split(' ')[1];
+        var decoded = jwt.verify(token, secretvalue);
+
+        const user = await userModal.findOne({ _id : decoded.user._id });
+
+        var password = await bcrypt.compare(request.body.new_password, user.password);
+
+        if (password) {
+            const resp = {
+                status: false,
+                message: "New password is same as current password !!",
+                data: []
+            }
+            response.send(resp)
+        } else {
+
+            const password = bcrypt.hashSync(request.body.new_password, saltRounds);
+
+            await userModal.updateOne({ _id: decoded.user._id }, {
+                $set: {
+                    password : password
+                }
+            })
+            .then((result) => {
+                let resp = {
+                    status: true,
+                    message: 'Change password successfully',
+                    data: result
+                }
+                response.send(resp)
+            })
+            .catch((error) => {
+                var errormessage = []
+                for (var value in error.errors) {
+                    errormessage.push(error.errors[value].message)
+                }
+                let res = {
+                    status: false,
+                    message: 'something went wrong',
+                    data: errormessage
+                }
+                response.send(res)
+            })
+        }
+    } catch (error) {
+        const data = {
+            status: false,
+            message: 'Token is invalid',
+            tokenStatus : false,
+            data: error
+        }
+        response.send(data)
+    }
+}
 
 // exports.clear = async (request, response) => {
 //     await categoryModal.updateOne({ _id: request.params.id }, {

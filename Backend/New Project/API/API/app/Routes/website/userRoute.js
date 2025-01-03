@@ -27,13 +27,10 @@ module.exports= app=>{
     router.post('/login',none,login);
     router.post('/register',none,register);
     router.post('/view-profile',none,viewProfile);
-
-    
-    // router.post('/forgot-password',none,forgotPassword);
+    router.post('/update-profile',single,updateProfile);
+    router.post('/change-password',none,changePassword);
+    router.post('/forgot-password',none,forgotPassword);
     // router.post('/reset-password',none,resetPassword);
-    // router.post('/change-password',none,changePassword);
-    // 
-    // router.post('/update-profile',single,updateProfile);
 
     app.use('/api/website/user',router)
 }

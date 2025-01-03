@@ -4,6 +4,18 @@ let userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'name is required']
     },
+    mobile_number: {
+        type: String,
+    },
+    country_name: {
+        type: String,
+    },
+    city_name: {
+        type: String,
+    },
+    image: {
+        type: String,
+    },
     email: {
         type: String,
         required: [true, 'email is required'],
