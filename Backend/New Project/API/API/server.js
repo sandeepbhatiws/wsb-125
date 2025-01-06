@@ -29,9 +29,9 @@ require('./app/Routes/website/userRoute.js')(app)
 mongoose.connect('mongodb://127.0.0.1:27017/FrankAndOaks')
   .then(() =>
     app.listen('5555',()=>{
- console.log('server working successfully')
+   console.log('server working successfully')
     }),
-     console.log('Connected!'))
-     .catch((error)=>{
-        console.log('something went wrong')
-     })
+   console.log('Connected!'))
+   .catch((error)=>{
+      console.log('something went wrong')
+   })

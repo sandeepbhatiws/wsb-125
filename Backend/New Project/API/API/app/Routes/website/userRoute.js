@@ -6,6 +6,7 @@ const router =express.Router();
 const path = require('path')
 const multer = require('multer')
 const folder = multer({dest:'uploads/users'})
+const validationMiddleware = require('../../validationMiddleware.js');
 
 const storage = multer.diskStorage({
     destination:function (req,file,cb){
@@ -26,11 +27,11 @@ module.exports= app=>{
 
     router.post('/login',none,login);
     router.post('/register',none,register);
-    router.post('/view-profile',none,viewProfile);
-    router.post('/update-profile',single,updateProfile);
-    router.post('/change-password',none,changePassword);
+    router.post('/view-profile',none,validationMiddleware,viewProfile);
+    router.post('/update-profile',single,validationMiddleware,updateProfile);
+    router.post('/change-password',none,validationMiddleware,changePassword);
     router.post('/forgot-password',none,forgotPassword);
-    // router.post('/reset-password',none,resetPassword);
+    router.post('/reset-password',none,resetPassword);
 
     app.use('/api/website/user',router)
 }

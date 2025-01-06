@@ -1,6 +1,7 @@
 const userModal = require("../../Modals/user.js")
 var jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const nodemailer = require("nodemailer");
 
 const saltRounds = 10;
 var secretvalue = '1234567890';
@@ -93,18 +94,8 @@ exports.login = async (request, response) => {
 
 exports.viewProfile = async (request, response) => {
     
-    try {
         const token = request.headers.authorization.split(' ')[1];
         var decoded = jwt.verify(token, secretvalue);
-    } catch (error) {
-        const data = {
-            status: false,
-            message: 'Token is invalid',
-            tokenStatus : false,
-            data: error
-        }
-        response.send(data)
-    }
 
     await userModal.findOne({ _id: decoded.user._id, deleted_at: null })
     .then((result) => {
@@ -238,6 +229,89 @@ exports.changePassword = async (request, response) => {
         response.send(data)
     }
 }
+
+exports.forgotPassword = async (request, response) => {
+
+    const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // true for port 465, false for other ports
+        auth: {
+          user: "ravideveloper0071@gmail.com",
+          pass: "ihkfaqqvlnpdovcb",
+        },
+    });
+
+    try {
+
+        var forgotMessage = `<b> Hello User </b><br>
+        <p> Please click on the following link to reset yopur passwoor - <a href="http://localhost:3000/reset-password/${request.body.email}"> http://localhost:3000/reset-password/${request.body.email}  </a> </p>`;
+
+
+        const info = await transporter.sendMail({
+            from: '"Maddison Foo Koch 👻" <maddison53@ethereal.email>', // sender address
+            to: request.body.email, // list of receivers
+            subject: "Forgot Password", // Subject line
+            // text: "Hello world?", // plain text body
+            html: forgotMessage, // html body
+        });
+
+        const resp = {
+            status: true,
+            message: "Forgot password email has beeb sent successfully !!",
+            data: []
+        }
+        response.send(resp)
+    } catch (error) {
+        let res = {
+            status: false,
+            message: 'something went wrong',
+            data: errormessage
+        }
+        response.send(res)
+    }
+}
+
+exports.resetPassword = async (request, response) => {
+
+    try {
+        const password = bcrypt.hashSync(request.body.password, saltRounds);
+
+        await userModal.updateOne({ email: request.body.email }, {
+            $set: {
+                password : password
+            }
+        })
+        .then((result) => {
+            let resp = {
+                status: true,
+                message: 'Reset password successfully',
+                data: result
+            }
+            response.send(resp)
+        })
+        .catch((error) => {
+            var errormessage = []
+            for (var value in error.errors) {
+                errormessage.push(error.errors[value].message)
+            }
+            let res = {
+                status: false,
+                message: 'something went wrong',
+                data: errormessage
+            }
+            response.send(res)
+        })
+    } catch (error) {
+        let res = {
+            status: false,
+            message: 'something went wrong',
+            data: errormessage
+        }
+        response.send(res)
+    }
+}
+
 
 // exports.clear = async (request, response) => {
 //     await categoryModal.updateOne({ _id: request.params.id }, {

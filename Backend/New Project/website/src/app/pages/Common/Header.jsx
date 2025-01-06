@@ -14,11 +14,22 @@ import Link from 'next/link';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useRouter } from 'next/navigation'
 
 function Header() {
     // /////////////////////////////////////////// modal
     const [modalShow, setModalShow] = React.useState(false);
 
+    const router = useRouter();
+
+    const [isLogin, setisLogin] = useState(false);
+
+
+    useEffect(() => {
+        if(!isLogin){
+            router.push('/');
+        }
+    },[]);
 
     const [signUp, UpdateSignUp] = useState(true);
 
@@ -372,12 +383,31 @@ function Header() {
                                         onHide={() => setModalShow(false)}
                                     />
 
-                                    <button className='shoppingIcon' data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <FaRegUserCircle />
-                                    </button>
-                                    <button className='shoppingIcon' data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                        <CiHeart />
-                                    </button>
+                                    {
+                                        isLogin
+                                        ?
+                                        <Link href="/dashbord">
+                                            <button className='shoppingIcon'>
+                                            <FaRegUserCircle />
+                                        </button>
+                                        </Link>
+                                        
+                                        :
+                                        <button className='shoppingIcon' data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <FaRegUserCircle />
+                                        </button>
+                                    }
+
+
+                                        
+                                        
+                            
+                                        <button className='shoppingIcon' data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            <CiHeart />
+                                        </button>
+
+
+
                                     <button className='shoppingIcon' data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                                         <MdOutlineShoppingBag />
                                     </button>
