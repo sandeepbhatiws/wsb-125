@@ -13,6 +13,7 @@ exports.register = async (request, response) => {
     const data = new userModal({
         name: request.body.name,
         email: request.body.email,
+        mobile_number: request.body.mobile_number,
         password : password,
         type : 'user',
     })

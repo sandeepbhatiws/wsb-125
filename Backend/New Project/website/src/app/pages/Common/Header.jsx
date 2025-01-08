@@ -15,6 +15,8 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useRouter } from 'next/navigation'
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Header() {
     // /////////////////////////////////////////// modal
@@ -22,7 +24,9 @@ function Header() {
 
     const router = useRouter();
 
-    const [isLogin, setisLogin] = useState(false);
+    var checkLogin = localStorage.getItem('loginUser');
+
+    const [isLogin, setisLogin] = useState(checkLogin ? true : false);
 
 
     useEffect(() => {
@@ -46,6 +50,7 @@ function Header() {
     }, [])
     return (
         <>
+            <ToastContainer/>
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content heart">
@@ -98,10 +103,10 @@ function Header() {
                             {
                                 (signUp) ?
 
-                                    <Login UpdateSignUp={UpdateSignUp} />
+                                    <Login UpdateSignUp={UpdateSignUp} setisLogin={setisLogin} setModalShow = {setModalShow} />
                                     :
 
-                                    <SignUp UpdateSignUp={UpdateSignUp} />
+                                    <SignUp UpdateSignUp={UpdateSignUp} setisLogin={setisLogin} setModalShow = {setModalShow}/>
                             }
 
 
@@ -248,128 +253,6 @@ function Header() {
                                                 </div>
                                             </div>
                                         </li>
-                                        {/* <li className='px-xxl-4 px-xl-3 px-lg-2'>
-                                            <span>
-                                                Sale
-                                                <div className="bottomBorder"></div>
-                                            </span>
-                                            <div className="row m-0 womanSubmenu">
-                                                <div className="col-2 py-3 ">
-                                                    <div className="py-2  submenuHeading"> <span> Featured </span> </div>
-                                                    <div className="submenubottom ">
-                                                        <ul className="p-0">
-                                                            <li> <Link href={'singlepage'}> New In</Link> </li>
-                                                            <li><Link href={'singlepage'}> Best Sellers </Link></li>
-                                                            <li><Link href={'singlepage'}> Linen, the febric of summer</Link> </li>
-                                                            <li><Link href={'singlepage'}> The Originals</Link> </li>
-                                                            <li> <Link href={'singlepage'}>Workwear</Link> </li>
-                                                            <li><Link href={'singlepage'}> Best of Instagram</Link> </li>
-                                                            <li><Link href={'singlepage'}> Gift Cards </Link></li>
-                                                            <li><Link href={'singlepage'}> Sale</Link> </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-2 py-3 ">
-                                                    <div className="py-2  submenuHeading"> <span> Featured </span> </div>
-                                                    <div className="submenubottom ">
-                                                        <ul className="p-0">
-                                                            <li><Link href={'singlepage'}> New In</Link> </li>
-                                                            <li><Link href={'singlepage'}> Best Sellers</Link> </li>
-                                                            <li><Link href={'singlepage'}> Linen, the febric of summer</Link> </li>
-                                                            <li><Link href={'singlepage'}> The Originals</Link> </li>
-                                                            <li><Link href={'singlepage'}> Workwear</Link> </li>
-                                                            <li><Link href={'singlepage'}> Best of Instagram</Link> </li>
-                                                            <li><Link href={'singlepage'}> Gift Cards </Link></li>
-                                                            <li><Link href={'singlepage'}> Sale </Link></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-2 py-3 ">
-                                                    <div className="py-2  submenuHeading"> <span> Featured </span> </div>
-                                                    <div className="submenubottom ">
-                                                        <ul className="p-0">
-                                                            <li><Link href={'singlepage'}> New In </Link></li>
-                                                            <li><Link href={'singlepage'}> Best Sellers </Link></li>
-                                                            <li><Link href={'singlepage'}> Linen, the febric of summer</Link> </li>
-                                                            <li><Link href={'singlepage'}> The Originals </Link></li>
-                                                            <li><Link href={'singlepage'}> Workwear</Link> </li>
-                                                            <li><Link href={'singlepage'}> Best of Instagram</Link> </li>
-                                                            <li><Link href={'singlepage'}> Gift Cards </Link></li>
-                                                            <li><Link href={'singlepage'}> Sale </Link></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-3 py-3 position-relative ">
-                                                    <img src="/womanimg1.jpg" className="w-100 h-100" />
-                                                    <div className="submenutitle"> Shorts </div>
-                                                </div>
-                                                <div className="col-3 py-3 position-relative ">
-                                                    <img src="/womanimg2.jpg" className="w-100 h-100" />
-                                                    <div className="submenutitle"> T-Shirts & Tops </div>
-                                                </div>
-                                            </div>
-                                        </li> */}
-                                        {/* <li className='px-xxl-4 px-xl-3 px-lg-2'>
-                                            <span>
-                                                Our Story
-                                                <div className="bottomBorder"></div>
-                                            </span>
-                                            <div className="row m-0 womanSubmenu">
-                                                <div className="col-2 py-3 ">
-                                                    <div className="py-2  submenuHeading"> <span> Featured </span> </div>
-                                                    <div className="submenubottom ">
-                                                        <ul className="p-0">
-                                                            <li> New In </li>
-                                                            <li> Best Sellers </li>
-                                                            <li> Linen, the febric of summer </li>
-                                                            <li> The Originals </li>
-                                                            <li> Workwear </li>
-                                                            <li> Best of Instagram </li>
-                                                            <li> Gift Cards </li>
-                                                            <li> Sale </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-2 py-3 ">
-                                                    <div className="py-2  submenuHeading"> <span> Featured </span> </div>
-                                                    <div className="submenubottom ">
-                                                        <ul className="p-0">
-                                                            <li> New In </li>
-                                                            <li> Best Sellers </li>
-                                                            <li> Linen, the febric of summer </li>
-                                                            <li> The Originals </li>
-                                                            <li> Workwear </li>
-                                                            <li> Best of Instagram </li>
-                                                            <li> Gift Cards </li>
-                                                            <li> Sale </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-2 py-3 ">
-                                                    <div className="py-2  submenuHeading"> <span> Featured </span> </div>
-                                                    <div className="submenubottom ">
-                                                        <ul className="p-0">
-                                                            <li> New In </li>
-                                                            <li> Best Sellers </li>
-                                                            <li> Linen, the febric of summer </li>
-                                                            <li> The Originals </li>
-                                                            <li> Workwear </li>
-                                                            <li> Best of Instagram </li>
-                                                            <li> Gift Cards </li>
-                                                            <li> Sale </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div className="col-3 py-3 position-relative ">
-                                                    <img src="/womanimg1.jpg" className="w-100 h-100" />
-                                                    <div className="submenutitle"> Shorts </div>
-                                                </div>
-                                                <div className="col-3 py-3 position-relative ">
-                                                    <img src="/womanimg2.jpg" className="w-100 h-100" />
-                                                    <div className="submenutitle"> T-Shirts & Tops </div>
-                                                </div>
-                                            </div>
-                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -560,17 +443,38 @@ function Header() {
 }
 
 
-function Login({ UpdateSignUp }) {
+function Login({ UpdateSignUp, setisLogin, setModalShow }) {
+
+    const loginUser = (event) => {
+        event.preventDefault();
+
+        axios.post('http://localhost:5555/api/website/user/login', event.target)
+        .then((success) => {
+            if(success.data.status == true){
+                event.target.reset();
+                toast.success(success.data.message);
+                localStorage.setItem('loginUser', success.data.token);
+                setisLogin(true);
+                setModalShow(false);
+            } else {
+                toast.error(success.data.message);
+            }
+        })
+        .catch(() => {
+            toast.error('Something Went Wrong !!');
+        })
+
+    }
 
     return (
         <>
             <div className='formData mt-5 bg-white'>
-                <form action="">
+                <form action="" onSubmit={ loginUser }>
                     <div className="mb-3">
-                        <input type="Email" className="form-control" id="formGroupExampleInput" placeholder="Email Address" />
+                        <input type="Email" name='email' className="form-control" id="formGroupExampleInput" placeholder="Email Address" />
                     </div>
                     <div className="mb-3">
-                        <input type="password" className="form-control" id="formGroupExampleInput2" placeholder="Password" />
+                        <input type="password" name='password' className="form-control" id="formGroupExampleInput2" placeholder="Password" />
                     </div>
                     <div className="mb-3">
                         <Link href={''} className='fs-6 text-decoration-underline'> Forgot Password ?</Link>
@@ -618,11 +522,33 @@ function Login({ UpdateSignUp }) {
     )
 }
 
-function SignUp({ UpdateSignUp }) {
+function SignUp({ UpdateSignUp, setisLogin, setModalShow }) {
+
+    const registerUser = (event) => {
+        event.preventDefault();
+
+        axios.post('http://localhost:5555/api/website/user/register', event.target)
+        .then((success) => {
+            if(success.data.status == true){
+                event.target.reset();
+                toast.success(success.data.message);
+                localStorage.setItem('loginUser', success.data.token);
+                setisLogin(true);
+                setModalShow(false);
+            } else {
+                toast.error(success.data.message);
+            }
+        })
+        .catch(() => {
+            toast.error('Something Went Wrong !!');
+        })
+
+    }
+
     return (
         <>
             <div className='formData mt-5 bg-white'>
-                <form action="">
+                <form action="" onSubmit={ registerUser }>
                     <div className="mb-3 py-3 text-center">
                         Already have an account?
                         <button className='signUpBtn' onClick={() => UpdateSignUp(true)}>
@@ -631,20 +557,17 @@ function SignUp({ UpdateSignUp }) {
                     </div>
                     <div class="row g-3 mb-3">
                         <div class="col">
-                            <input type="text" class="form-control" placeholder="First name" aria-label="First name" />
-                        </div>
-                        <div class="col">
-                            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" />
+                            <input type="text" name='name' class="form-control" placeholder="Enter name" aria-label="Enter Name" />
                         </div>
                     </div>
                     <div className="mb-3">
-                        <input type="number" className="form-control" id="formGroupExampleInput" placeholder="Mobile Number" />
+                        <input type="number" name='mobile_number' className="form-control" id="formGroupExampleInput" placeholder="Mobile Number" />
                     </div>
                     <div className="mb-3">
-                        <input type="Email" className="form-control" id="formGroupExampleInput" placeholder="Email Address" />
+                        <input type="Email" name='email' className="form-control" id="formGroupExampleInput" placeholder="Email Address" />
                     </div>
                     <div className="mb-3">
-                        <input type="password" className="form-control" id="formGroupExampleInput2" placeholder="Password" />
+                        <input type="password" name='password' className="form-control" id="formGroupExampleInput2" placeholder="Password" />
                     </div>
                     {/* <div className="my-3">
                         I shop for
