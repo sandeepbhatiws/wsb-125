@@ -1,12 +1,58 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ".././globals.css";
 import Address from './address'
 import Menu from './menu';
 import Header from '../pages/Common/Header';
+import { useRouter } from 'next/navigation'
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import Profile from './Profile';
+// import { headers } from 'next/headers';
 
 
 export default function page() {
+
+  const router = useRouter();
+
+  var checkLogin = localStorage.getItem('loginUser');
+  const [isLogin, setisLogin] = useState(checkLogin ? true : false);
+  
+    useEffect(() => {
+        if(!isLogin){
+            router.push('/');
+        }
+    },[]);
+
+    const [userData, setUserData] = useState('');
+
+
+    useEffect(() => {
+      axios.post('http://localhost:5555/api/website/user/view-profile','',{
+        headers: {
+          Authorization:`Bearer ${ checkLogin }`
+        }
+      })
+      .then((success) => {
+        if(success.data.status == true){
+          setUserData(success.data.data);
+          // toast.success(success.data.message);
+        } else {
+          if(success.data.tokenStatus == false){
+            localStorage.removeItem('loginUser')
+            setisLogin(false);
+            router.push('/')
+          } else {
+            toast.error(success.data.message);
+          }
+        }
+        console.log(success.data);
+      })
+      .catch((error) => {
+        toast.error('Something Went wrong !!');
+      })
+
+    },[])
 
   const [selectedAddress, setSelectedAddress] = useState('');
 
@@ -35,7 +81,7 @@ export default function page() {
         </div>
 
         <div className='col-lg-9'>
-          <Address/>
+          <Profile userData={userData} checkLogin={checkLogin} setisLogin={setisLogin}/>
 
           <div className='shipping'>
       <div className='d-flex p-2 border-bottom'>

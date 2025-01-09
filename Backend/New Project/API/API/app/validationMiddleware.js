@@ -5,6 +5,8 @@ var secretvalue = '1234567890';
 
 module.exports = (request,response,next) =>{
 
+    console.log(request.headers);
+
     try {
         const token = request.headers.authorization.split(' ')[1];
         var decoded = jwt.verify(token, secretvalue);

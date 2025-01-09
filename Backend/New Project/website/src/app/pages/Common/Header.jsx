@@ -28,7 +28,6 @@ function Header() {
 
     const [isLogin, setisLogin] = useState(checkLogin ? true : false);
 
-
     useEffect(() => {
         if(!isLogin){
             router.push('/');
@@ -444,7 +443,7 @@ function Header() {
 
 
 function Login({ UpdateSignUp, setisLogin, setModalShow }) {
-
+    const router = useRouter();
     const loginUser = (event) => {
         event.preventDefault();
 
@@ -456,6 +455,7 @@ function Login({ UpdateSignUp, setisLogin, setModalShow }) {
                 localStorage.setItem('loginUser', success.data.token);
                 setisLogin(true);
                 setModalShow(false);
+                router.push('dashbord')
             } else {
                 toast.error(success.data.message);
             }
