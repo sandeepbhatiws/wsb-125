@@ -5,6 +5,7 @@ const path = require('path')
 const multer = require('multer');
 const { insert, index, update, destroy, details, changeStatus } = require('../../Controller/ADmin/ProductController.js');
 const uploads = multer({ dest: 'uploads/products' })
+const validationMiddleware = require('../../validationMiddleware.js');
 
 const storage = multer.diskStorage({
     destination:function (req,file,cb){
@@ -24,17 +25,17 @@ const none = multer({storage:storage}).none()
 
 module.exports= app=>{
 
-    router.post('/add',upload,insert)
+    router.post('/add',upload,validationMiddleware,insert)
     
-    router.post('/',none,index)
+    router.post('/',none,validationMiddleware,index)
     
-    router.put('/update/:id',upload,update)
+    router.put('/update/:id',upload,validationMiddleware,update)
 
-    router.post('/delete',none,destroy)
+    router.post('/delete',none,validationMiddleware,destroy)
 
-    router.post('/change-status',none,changeStatus)
+    router.post('/change-status',none,validationMiddleware,changeStatus)
 
-    router.post('/detail/:id',none,details)
+    router.post('/detail/:id',none,validationMiddleware,details)
 
     app.use('/api/admin/products',router)
 }

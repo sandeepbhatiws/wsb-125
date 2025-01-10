@@ -97,6 +97,34 @@ exports.index = async (request, response) => {
         condition.status = request.body.status
     }
 
+
+    var totalRecords = await productModel.find().countDocuments();
+
+    // var totalProducts = await productModel.aggregate(
+    //     [
+    //         {
+    //             $count : 'totalRecords'
+    //         },
+    //     ]
+    // )
+
+    var totalProducts = await productModel.aggregate(
+        [
+            {
+                $group:{
+                    _id: "",
+                    minPrice: { $min: "$sale_price" },
+                    maxPrice: { $max: "$sale_price" },
+                    avgPrice: { $avg: "$sale_price" },
+                    sumPrice: { $sum: "$sale_price" }
+                }
+            }
+        ]
+     )
+
+
+
+
     await productModel.find(condition)
         // .select('name category_id sub_category_id color_id size_id actual_price sale_price status order')
         // .populate('category_id', 'name')
@@ -111,6 +139,7 @@ exports.index = async (request, response) => {
                 const resp = {
                     status: true,
                     message: 'Record found succesfully',
+                    totalRecords : totalProducts,
                     data: result
                 }
                 response.send(resp)
