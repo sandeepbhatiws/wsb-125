@@ -25,9 +25,9 @@ const none = multer({storage:storage}).none()
 
 module.exports= app=>{
 
-    router.post('/add',upload,validationMiddleware,insert)
+    router.post('/add',upload,insert)
     
-    router.post('/',none,validationMiddleware,index)
+    router.post('/',none,index)
     
     router.put('/update/:id',upload,validationMiddleware,update)
 

@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
     size_id: {
         type: String,
         ref: 'Sizes',
-        required: [true, 'size is required']
+        // required: [true, 'size is required']
     },
     size_ids: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -65,7 +65,8 @@ const productSchema = new mongoose.Schema({
     },
     order: {
         type: Number,
-        required: [true, 'order is required']
+        default:0
+        // required: [true, 'order is required']
     },
     deleted_at: {
         type: Date,

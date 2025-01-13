@@ -54,21 +54,23 @@ export default function AddProduct() {
         }).catch((error) => {
             console.log('something went wrong')
         })
-    }, [render])
+    }, [])
+
     useEffect(() => {
         axios.post('http://localhost:5555/api/admin/sub-categories', {
             //   page:currentPage,
             limit: 200,
             root_id: rootid
         })
-            .then((response) => {
-                setrender(!render)
-                setsubcategory(response.data.data)
-            })
-            .catch((error) => {
-                alert('something went wrong')
-            })
-    }, [render])
+        .then((response) => {
+            setrender(!render)
+            setsubcategory(response.data.data)
+        })
+        .catch((error) => {
+            alert('something went wrong')
+        })
+    }, [rootid])
+
     useEffect(() => {
         axios.post('http://localhost:5555/api/admin/size', {
             status: true
@@ -80,7 +82,8 @@ export default function AddProduct() {
             .catch((error) => {
                 alert('something went wrong')
             })
-    }, [render])
+    }, [])
+
     useEffect(() => {
         axios.post(`http://localhost:5555/api/admin/color`, {
             status: true
@@ -90,7 +93,7 @@ export default function AddProduct() {
             }).catch((error) => {
                 alert('something went wrong ')
             })
-    }, [render])
+    }, [])
 
     return (
         <>
@@ -109,7 +112,7 @@ export default function AddProduct() {
                 <div class="w-full min-h-[610px]">
                     <div class="max-w-[1220px] mx-auto py-5">
                         <h3 class="text-[26px] font-semibold bg-slate-100 py-3 px-4 rounded-t-md border border-slate-400">Add Product </h3>
-                        <form onSubmit={formHandle} class="border border-t-0 p-3 rounded-b-md border-slate-400">
+                        <form onSubmit={formHandle} autoComplete='off' class="border border-t-0 p-3 rounded-b-md border-slate-400">
                             <div class="mb-5">
                                 <label for="base-input" class="block mb-5 text-md font-medium text-gray-900">Select Parent Category</label>
                                 <select id="default" name="category_id" onChange={id} class="border-2 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
@@ -144,7 +147,7 @@ export default function AddProduct() {
                                 <div class="grid sm:grid-cols-2 gap-8">
                                     <div>
                                         <label class="block mb-5 text-md font-medium text-gray-900">Size</label>
-                                        <select id="default" name="size_id" class="border-2 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3">
+                                        <select id="default" name="size_ids[]" class="border-2 border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3" multiple>
                                             <option value={''}>--Select Size--</option>
                                             {
                                                 size.map((v, i) => {
@@ -211,10 +214,11 @@ export default function AddProduct() {
                                         name="image"
                                         id="file-input"
                                         class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4"
+                                        accept='image/*'
                                     />
                                 </div>
                             </div>
-                            <div class="mb-5">
+                            {/* <div class="mb-5">
                                 <label for="base-input" class="block mb-5 text-md font-medium text-gray-900">Image Animation</label>
                                 <div class="max-w-full">
                                     <label for="file-input" class="sr-only">Choose file</label>
@@ -225,16 +229,17 @@ export default function AddProduct() {
                                         class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4"
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div class="mb-5">
                                 <label for="base-input" class="block mb-5 text-md font-medium text-gray-900">Product Gallery</label>
                                 <div class="max-w-full">
                                     <label for="file-input" class="sr-only">Choose file</label>
                                     <input
                                         type="file"
-                                        name="pdGalleryImg-input"
+                                        name="images"
                                         id="file-input"
                                         class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4"
+                                        accept='image/*'
                                         multiple
                                     />
                                 </div>

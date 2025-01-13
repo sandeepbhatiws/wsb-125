@@ -5,13 +5,17 @@ exports.insert = async (request, response) => {
 
     var requestData = request.body;
 
+    // if(request.body.size_ids != ''){
+    //     requestData.size_ids = JSON.parse(request.body.size_ids);
+    // }
+
     console.log(request.files);
 
-    // if (request.files[0]) {
-    //     if (request.files[0].filename) {
-    //         requestData.image = request.files[0].filename
-    //     }
-    // }
+    if (request.files.image) {
+        if (request.files.image[0].filename) {
+            requestData.image = request.files.image[0].filename
+        }
+    }
 
     // if (request.files.images) {
     //     requestData.images = []
@@ -24,14 +28,17 @@ exports.insert = async (request, response) => {
     await data.save()
     .then((result) => {
 
-        // if (request.files) {
-        //     request.files.forEach(element => {
-        //         const images = new productImageModel({
-        //             product_id: result._id,
-        //             image: element.filename
-        //         });
-        //     })
-        // }
+        if (request.files.images) {
+            request.files.images.forEach(element => {
+                console.log(element)
+                const images = new productImageModel({
+                    product_id: result._id,
+                    image: element.filename
+                });
+
+                images.save();
+            })
+        }
 
         let res = {
             status: true,
@@ -122,18 +129,15 @@ exports.index = async (request, response) => {
         ]
      )
 
-
-
-
     await productModel.find(condition)
-        // .select('name category_id sub_category_id color_id size_id actual_price sale_price status order')
-        // .populate('category_id', 'name')
-        // .populate('sub_category_id', 'name')
-        // .populate('color_id', 'name')  
+        .select('name category_id sub_category_id color_id size_id actual_price sale_price status order')
+        .populate('category_id', 'name')
+        .populate('sub_category_id', 'name')
+        .populate('color_id', 'name')  
         // .populate('size_id', 'name')
         .populate('size_ids', 'name')
-        // .limit(limit).skip(skip)
-        // .sort({ _id: 'desc' })
+        .limit(limit).skip(skip)
+        .sort({ _id: 'desc' })
         .then((result) => {
             if (result.length > 0) {
                 const resp = {
