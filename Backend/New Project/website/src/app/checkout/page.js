@@ -1,8 +1,12 @@
 'use client'
 import React, { useState } from 'react'
 import Header from '../pages/Common/Header';
+import axios from 'axios';
+import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
 
 export default function page() {
+
+    const { error, isLoading, Razorpay } = useRazorpay();
 
     const [paymentMethods, setPaymentMethods] = useState({
         cashOnDelivery: false,
@@ -22,6 +26,62 @@ export default function page() {
             [name]: checked,
         });
     };
+
+
+    const placeOrder = () => {
+
+        const options = {
+            key: "rzp_test_bQlyV7ucVx6ogo",
+            amount: 50000, // Amount in paise
+            currency: "INR",
+            name: "Test Company",
+            description: "Test Transaction",
+            order_id: "order_9A33XWu170gUtm", // Generate order_id on server
+            handler: (response) => {
+              console.log(response);
+              alert("Payment Successful!");
+            },
+            prefill: {
+              name: "John Doe",
+              email: "john.doe@example.com",
+              contact: "9999999999",
+            },
+            theme: {
+              color: "#F37254",
+            },
+          };
+      
+          const razorpayInstance = new Razorpay(options);
+          razorpayInstance.open();
+
+
+        // var orderData = {
+
+        // }
+
+        // axios.post('http://localhost:5555/api/website/order/order-place',orderData,{
+        //     headers: {
+        //         Authorization:`Bearer ${ checkLogin }`
+        //     }
+        // })
+        // .then((success) => {
+        // if(success.data.status == true){
+        //     toast.success(success.data.message);
+        // } else {
+        //     if(success.data.tokenStatus == false){
+        //     localStorage.removeItem('loginUser')
+        //     setisLogin(false);
+        //     router.push('/')
+        //     } else {
+        //     toast.error(success.data.message);
+        //     }
+        // }
+        // console.log(success.data);
+        // })
+        // .catch((error) => {
+        //     toast.error('Something Went wrong !!');
+        // })
+    }
 
     return (
         <>
@@ -161,7 +221,7 @@ export default function page() {
                             )}
 
                             <div className="d-grid gap-2 py-3">
-                                <button className="btn btn-primary btn-lg" type="button">
+                                <button className="btn btn-primary btn-lg" type="button" onClick={ placeOrder }>
                                     Continue to Checkout
                                 </button>
                             </div>

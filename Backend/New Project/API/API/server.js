@@ -24,6 +24,7 @@ require('./app/Routes/ADmin/loginRoute.js')(app)
 
 // Website APIS
 require('./app/Routes/website/userRoute.js')(app)
+require('./app/Routes/website/orderPlaceRoute.js')(app)
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/FrankAndOaks')
