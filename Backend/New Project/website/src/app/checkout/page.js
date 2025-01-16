@@ -1,10 +1,20 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../pages/Common/Header';
 import axios from 'axios';
 import { useRazorpay, RazorpayOrderOptions } from "react-razorpay";
+import { toast } from 'react-toastify';
 
 export default function page() {
+
+    var checkLogin = localStorage.getItem('loginUser');
+    const [isLogin, setisLogin] = useState(checkLogin ? true : false);
+    
+    useEffect(() => {
+        if(!isLogin){
+            router.push('/');
+        }
+    },[]);
 
     const { error, isLoading, Razorpay } = useRazorpay();
 
@@ -29,14 +39,88 @@ export default function page() {
 
 
     const placeOrder = () => {
+        var orderData = {
+            product_details : [
+                {
+                  "id": 1,
+                  "name": "Wireless Headphones",
+                  "description": "Noise-cancelling over-ear headphones with 30-hour battery life.",
+                  "price": 99.99,
+                  "stock": 50,
+                  "category": "Electronics",
+                  "rating": 4.5
+                },
+                {
+                  "id": 2,
+                  "name": "Smartphone",
+                  "description": "5G-enabled smartphone with 128GB storage and a 6.5-inch display.",
+                  "price": 699.99,
+                  "stock": 30,
+                  "category": "Electronics",
+                  "rating": 4.7
+                },
+            ],
+            shipping_address : {
+                "id": 1,
+                "name": "John Doe",
+                "street_address": "123 Main Street",
+                "city": "New York",
+                "state": "NY",
+                "postal_code": "10001",
+                "country": "USA",
+                "phone": "+1-555-123-4567",
+                "email": "john.doe@example.com"
+            },
+            delivery_address : {
+                "id": 1,
+                "name": "John Doe",
+                "street_address": "123 Main Street",
+                "city": "New York",
+                "state": "NY",
+                "postal_code": "10001",
+                "country": "USA",
+                "phone": "+1-555-123-4567",
+                "email": "john.doe@example.com"
+            },
+            payment_status : 1,
+            total_amount : 500,
+            discount_amount : 50,
+            net_amount : 450,
+        }
+        axios.post('http://localhost:5555/api/website/order/order-place',orderData,{
+            headers: {
+                Authorization:`Bearer ${ checkLogin }`
+            }
+        })
+        .then((success) => {
+            if(success.data.status == true){
+                // toast.success(success.data.message);
+                openPaymentGateway(success.data.orderPayment);
+            } else {
+                if(success.data.tokenStatus == false){
+                localStorage.removeItem('loginUser')
+                setisLogin(false);
+                router.push('/')
+                } else {
+                toast.error(success.data.message);
+                }
+            }
+        })
+        .catch((error) => {
+            toast.error('Something Went wrong !!');
+        })
+    }
+
+    const openPaymentGateway = (orderPayment) => {
 
         const options = {
             key: "rzp_test_bQlyV7ucVx6ogo",
-            amount: 50000, // Amount in paise
+            amount: orderPayment.amount * 100, // Amount in paise
             currency: "INR",
-            name: "Test Company",
+            name: "WsCube Tech",
+            image : 'https://www.wscubetech.com/images/wscube-tech-logo-2.svg',
             description: "Test Transaction",
-            order_id: "order_9A33XWu170gUtm", // Generate order_id on server
+            order_id: orderPayment.id, // Generate order_id on server
             handler: (response) => {
               console.log(response);
               alert("Payment Successful!");
@@ -53,34 +137,61 @@ export default function page() {
       
           const razorpayInstance = new Razorpay(options);
           razorpayInstance.open();
+        
+    }
 
+    const confirmOrder = () => {
+        var orderData = {
+            payment_status : 2,
+        }
+        axios.post('http://localhost:5555/api/website/order/confirm-order',orderData,{
+            headers: {
+                Authorization:`Bearer ${ checkLogin }`
+            }
+        })
+        .then((success) => {
+            if(success.data.status == true){
+                toast.success(success.data.message);
+            } else {
+                if(success.data.tokenStatus == false){
+                localStorage.removeItem('loginUser')
+                setisLogin(false);
+                router.push('/')
+                } else {
+                toast.error(success.data.message);
+                }
+            }
+        })
+        .catch((error) => {
+            toast.error('Something Went wrong !!');
+        })
+    }
 
-        // var orderData = {
-
-        // }
-
-        // axios.post('http://localhost:5555/api/website/order/order-place',orderData,{
-        //     headers: {
-        //         Authorization:`Bearer ${ checkLogin }`
-        //     }
-        // })
-        // .then((success) => {
-        // if(success.data.status == true){
-        //     toast.success(success.data.message);
-        // } else {
-        //     if(success.data.tokenStatus == false){
-        //     localStorage.removeItem('loginUser')
-        //     setisLogin(false);
-        //     router.push('/')
-        //     } else {
-        //     toast.error(success.data.message);
-        //     }
-        // }
-        // console.log(success.data);
-        // })
-        // .catch((error) => {
-        //     toast.error('Something Went wrong !!');
-        // })
+    const failedOrder = () => {
+        var orderData = {
+            payment_status : 3,
+        }
+        axios.post('http://localhost:5555/api/website/order/confirm-order',orderData,{
+            headers: {
+                Authorization:`Bearer ${ checkLogin }`
+            }
+        })
+        .then((success) => {
+            if(success.data.status == true){
+                toast.success(success.data.message);
+            } else {
+                if(success.data.tokenStatus == false){
+                localStorage.removeItem('loginUser')
+                setisLogin(false);
+                router.push('/')
+                } else {
+                toast.error(success.data.message);
+                }
+            }
+        })
+        .catch((error) => {
+            toast.error('Something Went wrong !!');
+        })
     }
 
     return (

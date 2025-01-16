@@ -23,6 +23,15 @@ let orderSchema = new mongoose.Schema({
         type: Object,
         required: [true, 'This is required']
     },
+    total_amount: {
+        type: Number
+    },
+    discount_amount: {
+        type: Number
+    },
+    net_amount: {
+        type: Number
+    },
     payment_status: {
         type: Number,
         enum : [1, 2, 3],    // 1 - Pending 2 - Success  3 - Failed

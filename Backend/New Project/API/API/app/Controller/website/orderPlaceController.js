@@ -1,21 +1,46 @@
 const orderModal = require("../../Modals/order.js")
 
+var jwt = require('jsonwebtoken');
+
+const saltRounds = 10;
+var secretvalue = '1234567890';
+
 const Razorpay = require('razorpay');
 
 var instance = new Razorpay({
-  key_id: 'YOUR_KEY_ID',
-  key_secret: 'YOUR_KEY_SECRET',
+    key_id: 'rzp_test_bQlyV7ucVx6ogo',
+    key_secret: 'yvogXUWbQBb9Fc35v9SV4loV',
 });
 
 exports.orderPlace = async (request, response) => {
 
-    const data = new orderModal(request.body)
+    const token = request.headers.authorization.split(' ')[1];
+    var decoded = jwt.verify(token, secretvalue);
+
+    var requestData = request.body;
+    requestData.user_id = decoded.user._id;
+
+    const data = new orderModal(requestData)
     await data.save()
-    .then((result) => {
+    .then( async (result) => {
+
+        var orderPayment = await instance.orders.create({
+            "amount": request.body.net_amount * 100,
+            "currency": "INR",
+            "receipt": result._id,
+            "partial_payment": false,
+        });
+
+        await orderModal.updateOne({ _id: result._id }, {
+            $set: {
+                rozorpay_order_id : orderPayment.id
+            }
+        })
 
         let res = {
             status: true,
             message: 'Order Placed Successfully !!',
+            orderPayment : orderPayment,
             data: ''
         }
         response.send(res)
@@ -42,17 +67,13 @@ exports.confirmOrder = async (request, response) => {
 
         var data = request.body;
 
-        if(request.file){
-            data.image = request.file.filename;
-        }
-
-        await userModal.updateOne({ _id: decoded.user._id }, {
+        await orderModal.updateOne({ rozorpay_order_id: request.body.order_id }, {
             $set: data
         })
         .then((result) => {
             let resp = {
                 status: true,
-                message: 'Profile update successfully',
+                message: 'Order Status update successfully',
                 data: result
             }
             response.send(resp)
