@@ -67,7 +67,7 @@ exports.confirmOrder = async (request, response) => {
 
         var data = request.body;
 
-        await orderModal.updateOne({ rozorpay_order_id: request.body.order_id }, {
+        await orderModal.updateOne({ rozorpay_order_id: request.body.rozorpay_order_id }, {
             $set: data
         })
         .then((result) => {

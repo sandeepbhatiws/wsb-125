@@ -123,7 +123,7 @@ export default function page() {
             order_id: orderPayment.id, // Generate order_id on server
             handler: (response) => {
               console.log(response);
-              alert("Payment Successful!");
+              confirmOrder(response);
             },
             prefill: {
               name: "John Doe",
@@ -133,16 +133,24 @@ export default function page() {
             theme: {
               color: "#F37254",
             },
-          };
+        };
       
           const razorpayInstance = new Razorpay(options);
+
+          razorpayInstance.on("payment.failed", function (response) {
+            failedOrder(response);
+
+          });
+    
           razorpayInstance.open();
         
     }
 
-    const confirmOrder = () => {
+    const confirmOrder = (response) => {
         var orderData = {
             payment_status : 2,
+            rozorpay_order_id : response.razorpay_order_id,
+            rozorpay_transaction_id : response.razorpay_payment_id
         }
         axios.post('http://localhost:5555/api/website/order/confirm-order',orderData,{
             headers: {
@@ -170,6 +178,8 @@ export default function page() {
     const failedOrder = () => {
         var orderData = {
             payment_status : 3,
+            rozorpay_order_id : response.error.metadata.order_id,
+            rozorpay_transaction_id : response.error.metadata.payment_id
         }
         axios.post('http://localhost:5555/api/website/order/confirm-order',orderData,{
             headers: {

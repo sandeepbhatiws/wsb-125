@@ -6,7 +6,13 @@ const cors = require('cors')
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(bodyParser.json())
+
+// require('dotenv').config();
+// console.log(process.env.PORT);
+
 app.use(cors())
+
+
 
 app.get('/',(request,response)=>{
     response.send('server started successfully')
